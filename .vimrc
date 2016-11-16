@@ -143,10 +143,11 @@ set cursorline
 "set cursorcolumn
 
 " Tab settings
-set expandtab
-" Make tabs as wide as two spaces
+set copyindent
+set preserveindent
+set softtabstop=8
+set shiftwidth=8
 set tabstop=8
-set softtabstop=2
 set smarttab
 
 " Show “invisible” characters
@@ -215,7 +216,7 @@ set backspace=eol,start,indent
 set incsearch
 
 " Column width indicator
-set colorcolumn=+1
+set colorcolumn=80
 
 try
         lang en_us
