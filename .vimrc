@@ -347,7 +347,11 @@ xnoremap d "_d
 " Backspace: Delete selected and go into insert mode
 xnoremap <bs> c
 
-
+" Toggle folds
+inoremap <F1> <C-O>za
+nnoremap <F1> za
+onoremap <F1> <C-C>za
+vnoremap <F1> zf
 
 
 
