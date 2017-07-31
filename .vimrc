@@ -259,7 +259,28 @@ function! StripWhitespace()
         call setreg('/', old_query)
 endfunction
 
-"
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
+
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
+
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
+
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
+
+
 autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 
 " json = javascript syntax highlight
@@ -449,3 +470,6 @@ nmap <Leader>p "+p
 nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
+
+" open buffers with ctrlp
+nnoremap <leader>b :CtrlPBuffer<CR>
