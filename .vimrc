@@ -146,6 +146,7 @@ set cursorline
 " Tab settings
 set copyindent
 set preserveindent
+set noexpandtab
 set softtabstop=8
 set shiftwidth=8
 set tabstop=8
