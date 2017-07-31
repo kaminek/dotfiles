@@ -411,6 +411,10 @@ let g:ctrlp_custom_ignore = {
 	\ 'link': '',
 	\ }
 
+""" Ansible/yml syntax """
+let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
+let g:ansible_attribute_highlight = "ab"
+let g:ansible_name_highlight = 'd'
 
 """ Buffers Management  """
 
