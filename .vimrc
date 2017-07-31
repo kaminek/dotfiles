@@ -402,6 +402,15 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 
+""" Ctrl-p """
+
+" ignore some files
+let g:ctrlp_custom_ignore = {
+	\ 'dir':  '\.git$\|\.hg$\|\.svn$\|packages\|references\|_results\|bundle',
+	\ 'file': '\.pyc$\|\.swp$',
+	\ 'link': '',
+	\ }
+
 
 """ Buffers Management  """
 
