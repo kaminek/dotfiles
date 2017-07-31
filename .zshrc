@@ -1,13 +1,25 @@
+
 # Enviroment variables
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export ZSH=/Users/kaminek/.oh-my-zsh
 export DEFAULT_USER="$USER"
 export SSH_KEY_PATH="~/.ssh/rsa_id"
-export LC_ALL=us_MX.UTF-8
-export TERMINAL=iterm
 export PAGER=less
-export VISUAL=atom
 export TERM="xterm-256color"
+
+case `uname` in
+	Darwin)
+		export PATH=$HOME/bin:/usr/local/bin:$PATH
+		export ZSH=/Users/$USER/.oh-my-zsh
+		export TERMINAL=iterm
+		export VISUAL=atom
+		;;
+	Linux)
+		#
+		export PATH=$HOME/bin:$PATH
+		export ZSH=/home/$USER/.oh-my-zsh
+		export TERMINAL=urxvt
+		export VISUAL=gvim
+		;;
+esac
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
@@ -119,11 +131,28 @@ HIST_STAMPS="mm/dd/yyyy"
 
 # Plugins to load
 plugins=(git sudo zsh-autosuggestions zsh-completions)
+# Source files
 source $ZSH/oh-my-zsh.sh
+source $HOME/.aliases
 
 # Prompt elements
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs status time)
+# enable color on ls
+ eval `dircolors ~/.dircolors`
+
+# Colored man pages using less as pager
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+        man "$@"
+}
 
 # Use fzf for lookup
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
