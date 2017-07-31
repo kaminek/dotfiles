@@ -42,6 +42,7 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'terryma/vim-expand-region'
 
 " Misc
+Plugin 'pearofducks/ansible-vim'
 
 call vundle#end()
 filetype plugin indent on
