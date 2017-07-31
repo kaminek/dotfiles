@@ -416,6 +416,14 @@ let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
 let g:ansible_attribute_highlight = "ab"
 let g:ansible_name_highlight = 'd'
 
+""" IndentLine """
+let g:indentLine_setColors  = 0
+"let g:indentLine_char       = '.'
+"let g:indentLine_color_term = 233
+"let g:indentLine_color_gui  = "#262626"
+"let g:indentLine_faster     = 1
+"let g:indentLine_setConceal = 0
+
 """ Buffers Management  """
 
 " To open a new empty buffer
