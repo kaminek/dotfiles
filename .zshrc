@@ -28,31 +28,39 @@ if [[ -n $SSH_CONNECTION ]]; then
    export EDITOR='vi'
 fi
 
-# Syntax highlighting and tab completion
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -Uz compinit
 
-# Colored man pages using less as pager
-man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
-}
+	###	Antigen Zsh Plugin Manager	###
 
-# Call upon launch
-screenfetch
+# source the script file
+source $HOME/.oh-my-zsh/tools/antigen.zsh
 
-# Set name of the theme to load.
-ZSH_THEME="powerlevel9k/powerlevel9k"
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+antigen bundle sudo
+antigen bundle git
+antigen bundle heroku
+antigen bundle pip
+antigen bundle lein
+antigen bundle command-not-found
 
-# powerlevel9k config
+# helpers
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+
+# Syntax highlighting bundle.
+antigen bundle zsh-users/zsh-syntax-highlighting
+#antigen bundle colored-man-pages
+
+# Load the theme.
+#antigen theme robbyrussell
+antigen theme bhilburn/powerlevel9k powerlevel9k
+
+# Apply changes
+antigen apply
+
+	###	Begin PowerLevel9K Theme	###
 # Font
 POWERLEVEL9K_MODE='Knack Nerd Font'
 # Prompt settings
@@ -123,21 +131,21 @@ POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
 POWERLEVEL9K_TIME_FORMAT="%F{black}\uf017 %D{%I:%M}%f"
 POWERLEVEL9K_TIME_BACKGROUND='blue'
 
+# Prompt elements
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs status time)
+	###	End PowerLevel9K Theme	###
+
 # Command auto-correction.
 ENABLE_CORRECTION="true"
 
 # Command execution time stamp shown in the history command output.
 HIST_STAMPS="mm/dd/yyyy"
 
-# Plugins to load
-plugins=(git sudo zsh-autosuggestions zsh-completions)
 # Source files
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
 
-# Prompt elements
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs status time)
 # enable color on ls
  eval `dircolors ~/.dircolors`
 
@@ -153,6 +161,8 @@ man() {
         LESS_TERMCAP_us=$(printf "\e[1;32m") \
         man "$@"
 }
+# Call upon launch
+screenfetch
 
 # Use fzf for lookup
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
