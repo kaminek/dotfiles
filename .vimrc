@@ -1,18 +1,31 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
+"		  ██╗   ██╗██╗███╗   ███╗██████╗  ██████╗
+"		  ██║   ██║██║████╗ ████║██╔══██╗██╔════╝
+"		  ██║   ██║██║██╔████╔██║██████╔╝██║
+"		  ╚██╗ ██╔╝██║██║╚██╔╝██║██╔══██╗██║
+"		██╗╚████╔╝ ██║██║ ╚═╝ ██║██║  ██║╚██████╗
+"		╚═╝ ╚═══╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 set nocompatible
 filetype off
-"
-"
-"
-"
-"
-"########################################
-"""       Vundle plugin manager       """
-"########################################
-"
-" Make Vim more useful
-" Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+
+"##############################################################################
+"			Vundle plugin manager
+"##############################################################################
+" {{{
+
+" Check plugin manager or warn
+if filereadable(glob("$HOME/.vim/bundle/Vundle.vim/autoload/vundle.vim"))
+	" Set the runtime path to include Vundle and initialize
+	set rtp+=~/.vim/bundle/Vundle.vim
+else
+	echohl WarningMsg
+	echo "Vim Vundle plugin manager is not installed!"
+	echohl None
+endif
 
 " Use bash shell to avoid plugins manager errors
 set shell=/bin/bash
@@ -50,6 +63,8 @@ filetype plugin indent on
 "########################################
 """       General Configuration       """
 "########################################
+" }}}
+
 
 " Enable syntax highlighting
 syntax on
