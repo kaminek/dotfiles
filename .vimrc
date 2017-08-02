@@ -17,9 +17,6 @@
 set nocompatible
 filetype off
 
-" Enable syntax highlighting
-syntax on
-
 " Set augroup
 augroup MyAutoCmd
         autocmd!
@@ -27,15 +24,6 @@ augroup END
 
 " Solid line for vsplit separator
 set fcs=vert:│
-
-" Set a Dark/light theme
-set background=dark
-"set background=light
-
-" Colorscheme
-colorscheme gruvbox
-"colorscheme solarized
-"let g:solarized_termtrans=1
 
 " Add Powerline
 set  rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
@@ -260,6 +248,52 @@ Plugin 'pearofducks/ansible-vim'
 
 call vundle#end()
 filetype plugin indent on
+
+" }}}
+
+"##############################################################################
+"			Colorsheme and fonts
+"##############################################################################
+" {{{
+
+" Enable syntax highlighting
+syntax on
+
+" Set a Dark/light theme
+set background=dark
+"set background=light
+
+" Colorscheme
+colorscheme gruvbox
+"colorscheme solarized
+"let g:solarized_termtrans=1
+
+" Add 'TODO's markers for highlighting
+augroup vimrc_todo
+    autocmd!
+    autocmd Syntax * syn match MyTodo
+        \ /\v<(
+        \DEBUG|
+        \FIXME|
+        \HACK|
+        \NOTE|
+        \NOTES|
+        \OPTIMIZE|
+        \REMOVE|
+        \TFA|
+        \TODO|
+        \XXX
+        \)/ containedin=.*Comment.* contained
+augroup END
+highlight def link MyTodo Todo
+
+" Display the highlight group for under the cursor
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunction
 
 " }}}
 
