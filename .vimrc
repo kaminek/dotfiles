@@ -9,62 +9,13 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set nocompatible
-filetype off
-
 "##############################################################################
-"			Vundle plugin manager
+"			General Configuration
 "##############################################################################
 " {{{
 
-" Check plugin manager or warn
-if filereadable(glob("$HOME/.vim/bundle/Vundle.vim/autoload/vundle.vim"))
-	" Set the runtime path to include Vundle and initialize
-	set rtp+=~/.vim/bundle/Vundle.vim
-else
-	echohl WarningMsg
-	echo "Vim Vundle plugin manager is not installed!"
-	echohl None
-endif
-
-" Use bash shell to avoid plugins manager errors
-set shell=/bin/bash
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" Add other plugins here
-
-" Git tool
-Plugin 'tpope/vim-fugitive'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-"
-" Color themes
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'morhetz/gruvbox'
-
-" Easy navigation
-Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
-
-" Awesome status line
-Plugin 'bling/vim-airline'
-Plugin 'ryanoasis/vim-devicons'
-
-" Text objects
-Plugin 'terryma/vim-expand-region'
-
-" Misc
-Plugin 'pearofducks/ansible-vim'
-
-call vundle#end()
-filetype plugin indent on
-
-"########################################
-"""       General Configuration       """
-"########################################
-" }}}
-
+set nocompatible
+filetype off
 
 " Enable syntax highlighting
 syntax on
@@ -260,6 +211,57 @@ endif
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
+"}}}
+
+"##############################################################################
+"			Vundle plugin manager
+"##############################################################################
+" {{{
+
+" Check plugin manager or warn
+if filereadable(glob("$HOME/.vim/bundle/Vundle.vim/autoload/vundle.vim"))
+	" Set the runtime path to include Vundle and initialize
+	set rtp+=~/.vim/bundle/Vundle.vim
+else
+	echohl WarningMsg
+	echo "Vim Vundle plugin manager is not installed!"
+	echohl None
+endif
+
+" Use bash shell to avoid plugins manager errors
+set shell=/bin/bash
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" Add other plugins here
+
+" Git tool
+Plugin 'tpope/vim-fugitive'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+"
+" Color themes
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
+
+" Easy navigation
+Plugin 'scrooloose/nerdtree'
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" Awesome status line
+Plugin 'bling/vim-airline'
+Plugin 'ryanoasis/vim-devicons'
+
+" Text objects
+Plugin 'terryma/vim-expand-region'
+
+" Misc
+Plugin 'pearofducks/ansible-vim'
+
+call vundle#end()
+filetype plugin indent on
+
+" }}}
 
 "##########################################
 """       Custom Function/AutoCMD       """
