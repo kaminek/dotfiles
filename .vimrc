@@ -331,6 +331,8 @@ function! <SID>BufcloseCloseIt()
     endif
 endfunction
 
+" getting :Ggrep working perfectly
+command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
 
 autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 
@@ -427,6 +429,8 @@ nnoremap <F1> za
 onoremap <F1> <C-C>za
 vnoremap <F1> zf
 
+" call Ggrep custom function
+nnoremap <C-G> :Ggr <cword><CR>
 
 
 "######################################
