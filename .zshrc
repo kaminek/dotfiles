@@ -14,7 +14,7 @@ case `uname` in
 		;;
 	Linux)
 		#
-		export PATH=$HOME/bin:$PATH
+		export PATH=$HOME/bin:$HOME/.scripts:$PATH
 		export ZSH=/home/$USER/.oh-my-zsh
 		export TERMINAL=urxvt
 		export VISUAL=gvim
