@@ -297,11 +297,12 @@ endfunction
 
 " }}}
 
-"##########################################
-"""       Custom Function/AutoCMD       """
-"##########################################
+"##############################################################################
+"			Custom Functions/command/AutoCMDs
+"##############################################################################
+" {{{
 
-" Strip trailing whitespace (,ss)
+" Strip trailing whitespace
 function! StripWhitespace()
         let save_cursor = getpos(".")
         let old_query = getreg('/')
@@ -310,7 +311,7 @@ function! StripWhitespace()
         call setreg('/', old_query)
 endfunction
 
-" Don't close window, when deleting a buffer
+" Don't close window when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
     let l:currentBufNum = bufnr("%")
@@ -339,9 +340,11 @@ autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 " json = javascript syntax highlight
 autocmd MyAutoCmd FileType json setlocal syntax=javascript
 
-"##############################
-"""       Key Mapping       """
-"##############################
+" }}}
+
+"##############################################################################
+"			Key Mapping
+"##############################################################################
 
 " Change mapleader
 let mapleader = "\<Space>"
@@ -433,13 +436,12 @@ vnoremap <F1> zf
 nnoremap <C-G> :Ggr <cword><CR>
 
 
-"######################################
-"""       Plugins Management        """
-"######################################
+"##############################################################################
+"			Plugins Management
+"##############################################################################
 
 
-""" NerdTree  """
-
+" NerdTree:
 " Open NERDTree automatically when vim starts up
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -449,12 +451,10 @@ let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
 let NERDTreeIgnore=['\~$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr', '\.pyc', '__pycache__', '\.cache', '\.idea']
 
-
 " Shortcut to open NERDTree
 map <C-t> :NERDTreeToggle<CR>
 
-""" NERDTree git-plugin """
-
+" NERDTree_git:
 " Customize symboles
 let g:NERDTreeIndicatorMapCustom = {
                         \ "Modified"  : "✹",
@@ -468,9 +468,7 @@ let g:NERDTreeIndicatorMapCustom = {
                         \ "Unknown"   : "?"
                         \ }
 
-
-""" Airline """
-
+" Airline:
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
 
@@ -478,8 +476,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 
-""" Ctrl-p """
-
+" Ctrl_p:
 " ignore some files
 let g:ctrlp_custom_ignore = {
 	\ 'dir':  '\.git$\|\.hg$\|\.svn$\|packages\|references\|_results\|bundle',
@@ -487,12 +484,12 @@ let g:ctrlp_custom_ignore = {
 	\ 'link': '',
 	\ }
 
-""" Ansible/yml syntax """
+" Ansible_yml_syntax:
 let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
 let g:ansible_attribute_highlight = "ab"
 let g:ansible_name_highlight = 'd'
 
-""" IndentLine """
+" IndentLine:
 let g:indentLine_setColors  = 0
 "let g:indentLine_char       = '.'
 "let g:indentLine_color_term = 233
@@ -500,8 +497,7 @@ let g:indentLine_setColors  = 0
 "let g:indentLine_faster     = 1
 "let g:indentLine_setConceal = 0
 
-""" Buffers Management  """
-
+" Buffers Management
 " To open a new empty buffer
 nmap <leader>t :enew<cr>
 " Move to the next buffer
