@@ -346,6 +346,18 @@ autocmd MyAutoCmd FileType json setlocal syntax=javascript
 "			Key Mapping
 "##############################################################################
 
+" XXX: This must be correlated with terminal keybinding
+" Redefine keymapping on urxvt
+if &term =~ "xterm-256color"
+	" Generic
+	set <Up>=OA
+	set <Down>=OB
+	set <Right>=OC
+	set <Left>=OD
+"	set <PageUp>=[5~
+"	set <PageDown>=[6~
+endif
+
 " Change mapleader
 let mapleader = "\<Space>"
 
