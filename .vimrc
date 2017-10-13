@@ -376,19 +376,28 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a fle as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Easy split navigation
+" Easy window split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Managing tabs
-nnoremap <C-PageDown> :tabprevious<CR>
-nnoremap <C-PageUp> :tabnext<CR>
-nnoremap <C-t>    :tabnew<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
+" Buffers Management
+nnoremap <silent> <C-S-tab>    :bprevious<CR>
+nnoremap <silent> <C-PageUp>   :bprevious<CR>
+nnoremap <silent> <C-tab>      :bnext<CR>
+nnoremap <silent> <C-PageDown> :bnext<CR>
+nnoremap <silent> qq           :Bclose<cr>
+nnoremap <silent> qall         :bufdo Bclose<cr>
+nnoremap <silent> rall         :bufdo edit<cr>
+inoremap <silent> <C-S-tab>    <Esc>:bprevious<CR>i
+inoremap <silent> <C-PageUp>   <Esc>:bprevious<CR>i
+inoremap <silent> <C-tab>      <Esc>:bnext<CR>i
+inoremap <silent> <C-PageDown> <Esc>:bnext<CR>i
+
+" Previous/Next location
+nnoremap <A-Right> <C-i>
+nnoremap <A-Left> <C-o>
 
 " Next, keep search matches in the middle of the window
 nnoremap n nzzzv
@@ -446,6 +455,22 @@ vnoremap <F1> zf
 
 " call Ggrep custom function
 nnoremap <C-G> :Ggr <cword><CR>
+
+" Use mapleader to open new file
+nnoremap <Leader>o :CtrlP<CR>
+" Use mapleader to save file
+nnoremap <Leader>w :w<CR>
+
+" Copy & paste to system clipboard
+vmap <Leader>y "+y
+vmap <Leader>d "+d
+nmap <Leader>p "+p
+nmap <Leader>P "+P
+vmap <Leader>p "+p
+vmap <Leader>P "+P
+
+" open buffers with ctrlp
+nnoremap <leader>b :CtrlPBuffer<CR>
 
 
 "##############################################################################
@@ -508,31 +533,3 @@ let g:indentLine_setColors  = 0
 "let g:indentLine_color_gui  = "#262626"
 "let g:indentLine_faster     = 1
 "let g:indentLine_setConceal = 0
-
-" Buffers Management
-" To open a new empty buffer
-nmap <leader>t :enew<cr>
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
-" Close the current buffer and move to the previous one
-nmap <leader>q :bp <BAR> bd #<CR>
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
-
-" Use mapleader to open new file
-nnoremap <Leader>o :CtrlP<CR>
-" Use mapleader to save file
-nnoremap <Leader>w :w<CR>
-
-" Copy & paste to system clipboard
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-
-" open buffers with ctrlp
-nnoremap <leader>b :CtrlPBuffer<CR>
