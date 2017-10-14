@@ -227,7 +227,10 @@ Plugin 'VundleVim/Vundle.vim'
 " Git tool
 Plugin 'tpope/vim-fugitive'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-"
+
+" Ctags
+Plugin 'majutsushi/tagbar'
+
 " Color themes
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'morhetz/gruvbox'
@@ -472,6 +475,9 @@ vmap <Leader>P "+P
 " open buffers with ctrlp
 nnoremap <leader>b :CtrlPBuffer<CR>
 
+" Ctags management
+nmap <F4> :TagbarToggle<CR>
+nnoremap <leader>. :CtrlPTag<cr>
 
 "##############################################################################
 "			Plugins Management
