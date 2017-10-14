@@ -21,6 +21,7 @@ case `uname` in
 		export ZSH=/Users/$USER/.oh-my-zsh
 		export TERMINAL=iterm
 		export VISUAL=atom
+		DIRCOLORS=gdircolors
 		;;
 	Linux)
 		#
@@ -28,6 +29,7 @@ case `uname` in
 		export ZSH=/home/$USER/.oh-my-zsh
 		export TERMINAL=urxvt
 		export VISUAL=gvim
+		DIRCOLORS=dircolors
 		;;
 esac
 
@@ -195,7 +197,7 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
 
 # enable color on ls
- eval `dircolors ~/.dircolors`
+ eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
 
 # Colored man pages using less as pager
 man() {
