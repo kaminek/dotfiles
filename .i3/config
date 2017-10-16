@@ -224,7 +224,7 @@ bar {
 #bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # screenlock
-bindsym Control+$mod+l exec "$HOME/.i3/lock.sh $HOME/.icons/lock1.png"
+bindsym Control+$mod+l exec "$HOME/.i3/scripts/lock.sh $HOME/.icons/lock1.png"
 
 # custom settings
 #exec --no-startup-id gnome-session         # GNOME session
