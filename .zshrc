@@ -9,6 +9,10 @@
 #
 ###############################################################################
 
+#==============================================================================
+#			General
+#==============================================================================
+
 # Enviroment variables
 export DEFAULT_USER="$USER"
 export SSH_KEY_PATH="~/.ssh/rsa_id"
@@ -39,6 +43,10 @@ if [[ -n $SSH_CONNECTION ]]; then
  else
    export EDITOR='vi'
 fi
+
+#==============================================================================
+#			Key bindings
+#==============================================================================
 
 # Install proper key bindings for Home, PgDn, PgUp, etc.
 bindkey -e
@@ -78,9 +86,9 @@ bindkey '^r'      history-incremental-search-backward
 bindkey "^[[5~"   up-line-or-history
 bindkey "^[[6~"   down-line-or-history
 
-autoload -Uz compinit
-
-	###	Antigen Zsh Plugin Manager	###
+#==============================================================================
+#			Antigen Zsh Plugin Manager
+#==============================================================================
 
 # source the script file
 source $HOME/.oh-my-zsh/tools/antigen.zsh
@@ -109,6 +117,8 @@ antigen theme bhilburn/powerlevel9k powerlevel9k
 
 # Apply changes
 antigen apply
+
+autoload -Uz compinit
 
 #==============================================================================
 #			PowerLevel9K Theme
@@ -235,6 +245,10 @@ POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
 POWERLEVEL9K_TIME_FORMAT="%F{black}\uf017 %D{%I:%M}%f"
 POWERLEVEL9K_TIME_FOREGROUND="cyan"
 POWERLEVEL9K_TIME_BACKGROUND="235"
+
+#==============================================================================
+#			Misc
+#==============================================================================
 
 
 # Command auto-correction.
