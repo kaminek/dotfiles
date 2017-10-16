@@ -287,6 +287,8 @@ ENABLE_CORRECTION="true"
 # Command execution time stamp shown in the history command output.
 HIST_STAMPS="mm/dd/yyyy"
 
+# Improved less option
+export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
 
 # Colored man pages using less as pager
 man() {
