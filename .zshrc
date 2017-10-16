@@ -287,10 +287,6 @@ ENABLE_CORRECTION="true"
 # Command execution time stamp shown in the history command output.
 HIST_STAMPS="mm/dd/yyyy"
 
-# Source files
-source $ZSH/oh-my-zsh.sh
-source $HOME/.aliases
-
 
 # Colored man pages using less as pager
 man() {
@@ -304,6 +300,11 @@ man() {
         LESS_TERMCAP_us=$(printf "\e[1;32m") \
         man "$@"
 }
+
+# Source files
+[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
+[[ -f $HOME/.aliases ]] && source $HOME/.aliases
+
 # Call upon launch
 screenfetch
 
