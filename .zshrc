@@ -269,6 +269,17 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=green,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=magenta,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 
+# enable color on ls
+eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
+
+if [[ $OSTYPE = (darwin|freebsd)* ]]; then
+	# Prefer GNU version, since it respects dircolors.
+	alias ls='() { $(whence -p gls) -Ctr --file-type --color=auto $@ }'
+	export CLICOLOR="YES" # Equivalent to passing -G to ls.
+	export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+else
+	alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
+fi
 
 # Command auto-correction.
 ENABLE_CORRECTION="true"
@@ -280,8 +291,6 @@ HIST_STAMPS="mm/dd/yyyy"
 source $ZSH/oh-my-zsh.sh
 source $HOME/.aliases
 
-# enable color on ls
- eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
 
 # Colored man pages using less as pager
 man() {
