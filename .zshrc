@@ -93,6 +93,11 @@ bindkey "^[[6~"   down-line-or-history
 # source the script file
 source $HOME/.oh-my-zsh/tools/antigen.zsh
 
+# configuration vars
+export ANTIGEN_PATH="$HOME/.antigen"
+export ANTIGEN_BUNDLES="$ANTIGEN_PATH/plugins"
+export ANTIGEN_LOG="$ANTIGEN_PATH/antigen.log"
+
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
