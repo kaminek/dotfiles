@@ -22,6 +22,9 @@ augroup MyAutoCmd
         autocmd!
 augroup END
 
+" Set os type, keep the variable inside this file
+let s:os_type = system('uname -s')
+
 " Solid line for vsplit separator
 set fcs=vert:│
 
