@@ -477,7 +477,10 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 
 " Ctags management
 nmap <F4> :TagbarToggle<CR>
-nnoremap <leader>. :CtrlPTag<cr>
+nnoremap <leader>. :CtrlPTag<CR>
+nnoremap ù <C-]><CR>
+nnoremap t :tnext<CR>
+nnoremap T :tprevious<CR>
 
 "##############################################################################
 "			Plugins Management
