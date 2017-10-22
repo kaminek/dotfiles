@@ -240,7 +240,7 @@ Plugin 'morhetz/gruvbox'
 
 " Easy navigation
 Plugin 'scrooloose/nerdtree'
-Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
 
 " Awesome status line
 Plugin 'bling/vim-airline'
@@ -400,6 +400,8 @@ inoremap <silent> <C-S-tab>    <Esc>:bprevious<CR>i
 inoremap <silent> <C-PageUp>   <Esc>:bprevious<CR>i
 inoremap <silent> <C-tab>      <Esc>:bnext<CR>i
 inoremap <silent> <C-PageDown> <Esc>:bnext<CR>i
+" open buffers with fzf
+nnoremap <leader>b :Buffers<CR>
 
 " Previous/Next location
 nnoremap <A-Right> <C-i>
@@ -462,8 +464,9 @@ vnoremap <F1> zf
 " call Ggrep custom function
 nnoremap <C-G> :Ggr <cword><CR>
 
-" Use mapleader to open new file
-nnoremap <Leader>o :CtrlP<CR>
+" Open fzf, replace the old CtrlP plugin
+nnoremap <C-p> :FZF<CR>
+
 " Use mapleader to save file
 nnoremap <Leader>w :w<CR>
 
@@ -475,12 +478,9 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" open buffers with ctrlp
-nnoremap <leader>b :CtrlPBuffer<CR>
-
 " Ctags management
 nmap <F4> :TagbarToggle<CR>
-nnoremap <leader>. :CtrlPTag<CR>
+nnoremap <leader>. :Tags<CR>
 nnoremap ù <C-]><CR>
 nnoremap t :tnext<CR>
 nnoremap T :tprevious<CR>
@@ -525,14 +525,6 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 
-" Ctrl_p:
-" ignore some files
-let g:ctrlp_custom_ignore = {
-	\ 'dir':  '\.git$\|\.hg$\|\.svn$\|packages\|references\|_results\|bundle',
-	\ 'file': '\.pyc$\|\.swp$',
-	\ 'link': '',
-	\ }
-
 " Ansible_yml_syntax:
 let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
 let g:ansible_attribute_highlight = "ab"
@@ -545,3 +537,16 @@ let g:indentLine_setColors  = 0
 "let g:indentLine_color_gui  = "#262626"
 "let g:indentLine_faster     = 1
 "let g:indentLine_setConceal = 0
+
+" FZF:
+" add fzf bin path
+if s:os_type =~ 'Darwin'
+  " Installed using homebrew
+  set rtp+=/usr/local/opt/fzf
+else
+  " Installed following github repo
+  set rtp+=~/.fzf
+endif
+"
+" Tell ack.vim to use ag (the Silver Searcher) instead
+let g:ackprg = 'ag --vimgrep'
