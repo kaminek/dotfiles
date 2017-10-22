@@ -1,3 +1,4 @@
+# vim:ft=zsh:ts=2:sw=2:sts:et:
 ###############################################################################
 #
 #		   ███████╗███████╗██╗  ██╗██████╗  ██████╗
@@ -13,35 +14,64 @@
 #			General
 #==============================================================================
 
+# Internal functions
+
+# Returns whether the given command is executable or aliased.
+_has() {
+  return $( whence $1 >/dev/null 2>&1 )
+}
+
+# Returns whether the current host type is what we think it is. (HOSTTYPE is
+# set later.)
+_is() {
+  return $( [ "$HOSTTYPE" = "$1" ] )
+}
+
+# Returns whether the given statement executed cleanly.
+_try() {
+  return $( eval $* >/dev/null 2>&1 )
+}
+
 # Enviroment variables
-export DEFAULT_USER="$USER"
-export SSH_KEY_PATH="~/.ssh/rsa_id"
+
+export DEFAULT_USER=$USER
+export ZSH=$HOME/.oh-my-zsh
 export PAGER=less
-export TERM="xterm-256color"
 
-case `uname` in
-	Darwin)
-		export PATH=$HOME/bin:/usr/local/bin:$PATH
-		export ZSH=/Users/$USER/.oh-my-zsh
-		export TERMINAL=iterm
-		export VISUAL=atom
-		DIRCOLORS=gdircolors
-		;;
-	Linux)
-		#
-		export PATH=$HOME/bin:$HOME/.scripts:$PATH
-		export ZSH=/home/$USER/.oh-my-zsh
-		export TERMINAL=urxvt
-		export VISUAL=gvim
-		DIRCOLORS=dircolors
-		;;
-esac
+if [ "$TERM" = "screen" ]; then
+  export TERM="screen-256color"
+else
+  export TERM="xterm-256color"
+fi
 
-# Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vi'
- else
-   export EDITOR='vi'
+if _has hostname; then
+  HOSTNAME=`hostname`
+elif _has uname; then
+  HOSTNAME=`uname -n`
+else
+  HOSTNAME="unknown"
+fi
+export HOSTNAME
+
+# HOSTTYPE = { Linux | OpenBSD | SunOS | etc. }
+if _has uname; then
+  HOSTTYPE=`uname -s`
+else
+  HOSTTYPE="unknown"
+fi
+export HOSTTYPE
+
+if _is Darwin; then
+	export PATH=$HOME/bin:/usr/local/bin:$PATH
+	export TERMINAL="iterm"
+	export VISUAL="atom"
+	DIRCOLORS=gdircolors
+elif _is Linux; then
+	export PATH=$HOME/bin:$HOME/.scripts:$PATH
+	export ZSH=/home/$USER/.oh-my-zsh
+	export TERMINAL="urxvt"
+	export VISUAL="gvim"
+	DIRCOLORS=dircolors
 fi
 
 #==============================================================================
@@ -277,7 +307,7 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 # enable color on ls
 eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
 
-if [[ $OSTYPE = (darwin|freebsd)* ]]; then
+if _is Darwin; then
 	# Prefer GNU version, since it respects dircolors.
 	alias ls='() { $(whence -p gls) -Ctr --file-type --color=auto $@ }'
 	export CLICOLOR="YES" # Equivalent to passing -G to ls.
@@ -297,19 +327,22 @@ export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen
 
 # Colored man pages using less as pager
 man() {
-    env \
-        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-        LESS_TERMCAP_md=$(printf "\e[1;31m") \
-        LESS_TERMCAP_me=$(printf "\e[0m") \
-        LESS_TERMCAP_se=$(printf "\e[0m") \
-        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-        LESS_TERMCAP_ue=$(printf "\e[0m") \
-        LESS_TERMCAP_us=$(printf "\e[1;32m") \
-        man "$@"
+  env \
+    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+    LESS_TERMCAP_md=$(printf "\e[1;31m") \
+    LESS_TERMCAP_me=$(printf "\e[0m") \
+    LESS_TERMCAP_se=$(printf "\e[0m") \
+    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+    LESS_TERMCAP_ue=$(printf "\e[0m") \
+    LESS_TERMCAP_us=$(printf "\e[1;32m") \
+    man "$@"
 }
 
 # Source files
+
+# zsh
 [[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
+# aliases
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
 # fzf
