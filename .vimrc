@@ -28,11 +28,8 @@ let s:os_type = system('uname -s')
 " Solid line for vsplit separator
 set fcs=vert:│
 
-" Add Powerline
-set  rtp+=/usr/local/lib/python2.7/dist-packages/powerline/bindings/vim/
 set laststatus=2
 set t_Co=256
-let g:airline_powerline_fonts=1
 
 " Set custom font for Gvim
 "set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
@@ -243,7 +240,8 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'junegunn/fzf.vim'
 
 " Awesome status line
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ryanoasis/vim-devicons'
 
 " Text objects
@@ -518,12 +516,25 @@ let g:NERDTreeIndicatorMapCustom = {
                         \ }
 
 " Airline:
+let g:airline_theme = 'dark'
+let g:airline_powerline_fonts = 1
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
-
 " Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_powerline_fonts = 1
+" Let's square everything
+let g:airline_left_sep=''
+let g:airline_left_alt_sep = '|'
+let g:airline_right_sep=''
+let g:airline_right_alt_sep = '|'
+" Let's use straight buffer tabs
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = '|'
+" customize status line
+let g:airline_section_x = airline#section#create_right(['filetype'])
+let g:airline_section_z = airline#section#create(['%3P ', 'linenr', ':%c'])
 
 " Ansible_yml_syntax:
 let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
