@@ -247,8 +247,18 @@ Plugin 'ryanoasis/vim-devicons'
 " Text objects
 Plugin 'terryma/vim-expand-region'
 
-" Misc
+" Language support
+Plugin 'vim-jp/vim-cpp'
+Plugin 'mitsuhiko/vim-python-combined'
+Plugin 'tpope/vim-git'
+Plugin 'fatih/vim-go'
+Plugin 'PotatoesMaster/i3-vim-syntax'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'stephpy/vim-yaml'
 Plugin 'pearofducks/ansible-vim'
+
+" Misc
 
 call vundle#end()
 filetype plugin indent on
