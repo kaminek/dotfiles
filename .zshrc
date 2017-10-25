@@ -32,6 +32,17 @@ _try() {
   return $( eval $* >/dev/null 2>&1 )
 }
 
+_prepend_to_path() {
+  if [ -d $1 ]; then
+    export PATH="$PATH:$1" ;
+  fi
+}
+
+_append_to_path() {
+  if [ -d $1 ]; then
+    export PATH="$1:$PATH" ;
+  fi
+}
 # Enviroment variables
 
 export DEFAULT_USER=$USER
