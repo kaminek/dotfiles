@@ -278,7 +278,7 @@ POWERLEVEL9K_TIME_BACKGROUND="235"
 
 # Prompt elements
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context host dir_writable dir vcs)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir_writable dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir_writable dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs status time)
 
 #==============================================================================
