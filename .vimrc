@@ -477,8 +477,10 @@ nnoremap <F1> za
 onoremap <F1> <C-C>za
 vnoremap <F1> zf
 
+" Fugitive maps
 " call Ggrep custom function
-nnoremap <C-G> :Ggr <cword><CR>
+nnoremap <C-G>g :Ggr <cword><CR>
+nnoremap <C-G>b :Gblame<CR>
 
 " Open fzf, replace the old CtrlP plugin
 nnoremap <C-p> :FZF<CR>
