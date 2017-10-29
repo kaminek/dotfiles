@@ -68,8 +68,8 @@
         # unversioned.
         precomposeunicode = false
 [pretty]
-        fixes = Fixes: %h (\"%s\")
-        full-line = "%C(cyan)%ad%Creset %Cred(%><(10)%cr)%Creset - %Cgreen%><(20,trunc)%an%Creset - %C(yellow)%h%Creset -%C(auto)%d%Creset %s"
+        fixes = "Fixes: %h (%s)"
+        full-line = "%C(red)(%><(10)%cr)%C(reset) | %Cgreen%><(15,trunc)%an%C(reset) | %C(yellow)%h%C(reset) |%C(auto)%d%C(reset) %s - %C(cyan)%ai%C(reset)"
         alt-full-line = "%C(cyan)%ad%Creset %Cred(%><(15)%cr)%Creset - %Cgreen%><(21,trunc)%an%Creset - %C(yellow)%h%Creset - %<(80,trunc)%s%C(auto)%d%Creset"
 
 [alias]
@@ -77,7 +77,7 @@
         # commits
         lg = log --pretty=oneline -n 20 --graph --abbrev-commit
         l = log --pretty=full-line --date=short
-        fixes = log --abbrev=12 --pretty=fixes -n 1
+        fixes = log --abbrev=12 --pretty=fixes -n 20
         graph = log --graph --decorate --pretty=oneline --abbrev-commit
         tree = log --graph --decorate --pretty=oneline --abbrev-commit --all
 
