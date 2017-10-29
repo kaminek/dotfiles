@@ -347,6 +347,13 @@ function! <SID>BufcloseCloseIt()
     endif
 endfunction
 
+" Enable/Disable displaying space and tabs indentation
+command! IndentToggle call <SID>IndentationToggle()
+function! <SID>IndentationToggle()
+	set list!
+	:IndentLinesToggle
+endfunction
+
 " getting :Ggrep working perfectly
 command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
 
@@ -493,6 +500,9 @@ nnoremap <leader>. :Tags<CR>
 nnoremap ù <C-]><CR>
 nnoremap t :tnext<CR>
 nnoremap T :tprevious<CR>
+
+" enable/disable indentation
+nnoremap <Leader>i :IndentToggle<CR>
 
 "##############################################################################
 "			Plugins Management
