@@ -107,8 +107,8 @@ set tabstop=8
 set smarttab
 
 " Show “invisible” characters
-"set lcs=tab:   ,trail:·,eol:¬,nbsp:_
-"set list
+set listchars=tab:\┆\ ,trail:·,precedes:←,extends:→
+set list
 
 " listchar=trail is not as flexible, use the below to highlight trailing
 " whitespace
@@ -259,6 +259,7 @@ Plugin 'stephpy/vim-yaml'
 Plugin 'pearofducks/ansible-vim'
 
 " Misc
+Plugin 'Yggdroot/indentLine'
 
 call vundle#end()
 filetype plugin indent on
@@ -552,12 +553,9 @@ let g:ansible_attribute_highlight = "ab"
 let g:ansible_name_highlight = 'd'
 
 " IndentLine:
-let g:indentLine_setColors  = 0
-"let g:indentLine_char       = '.'
-"let g:indentLine_color_term = 233
-"let g:indentLine_color_gui  = "#262626"
-"let g:indentLine_faster     = 1
-"let g:indentLine_setConceal = 0
+let g:indentLine_char       = '┆'
+" let's match color scheme
+let g:indentLine_setColors = 1
 
 " FZF:
 " add fzf bin path
