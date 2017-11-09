@@ -506,6 +506,9 @@ nnoremap T :tprevious<CR>
 " enable/disable indentation
 nnoremap <Leader>i :IndentToggle<CR>
 
+" Allow saving of files as sudo
+cmap w!! w !sudo tee > /dev/null %
+
 "##############################################################################
 "			Plugins Management
 "##############################################################################
