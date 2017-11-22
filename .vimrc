@@ -260,6 +260,7 @@ Plugin 'pearofducks/ansible-vim'
 
 " Misc
 Plugin 'Yggdroot/indentLine'
+Plugin 'tpope/vim-commentary'
 
 call vundle#end()
 filetype plugin indent on
