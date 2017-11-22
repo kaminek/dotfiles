@@ -49,7 +49,7 @@ set $default_gaps_inner 0
 set $default_gaps_outer 0
 
 # Gaps
-smart_gaps on
+#smart_gaps on
 smart_borders on
 gaps inner 5
 gaps outer 10
