@@ -229,9 +229,11 @@ bar {
 # screenlock
 bindsym Control+$mod+l exec "$HOME/.i3/scripts/lock.sh $HOME/.icons/lock1.png"
 
-# custom settings
-#exec --no-startup-id gnome-session         # GNOME session
-#exec --no-startup-id gnome-settings-daemon # GNOME desktop settings
+# Custom settings
+
+#exec --no-startup-id gnome-session
+# GNOME desktop settings
+exec --no-startup-id gnome-settings-daemon
 #exec --no-startup-id xautolock -time 10 -locker 'gnome-screensaver-command -l'
 
 # background image
