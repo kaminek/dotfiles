@@ -237,7 +237,7 @@ exec --no-startup-id gnome-settings-daemon
 #exec --no-startup-id xautolock -time 10 -locker 'gnome-screensaver-command -l'
 
 # background image
-exec --no-startup-id feh --bg-fill ~/Pictures/backgrounds/bg3.jpg
+exec --no-startup-id "$HOME/.i3/scripts/wallpaper_slideshow.sh"
 
 # on start up
 exec_always compton -f
