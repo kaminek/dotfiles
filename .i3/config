@@ -239,6 +239,9 @@ exec --no-startup-id gnome-settings-daemon
 # background image
 exec --no-startup-id "$HOME/.i3/scripts/wallpaper_slideshow.sh"
 
+# Start notification daemon
+exec --no-startup-id /usr/lib/notification-daemon/notification-daemon
+
 # on start up
 exec_always compton -f
 
