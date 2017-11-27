@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WALLPAPERS=$HOME/Pictures/Wallpapers/*
-DELAY=10m
+DELAY=1h
 
 while true
 do
