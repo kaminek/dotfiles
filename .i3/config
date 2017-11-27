@@ -128,7 +128,7 @@ bindsym $mod+Shift+f exec $browser
 bindsym $mod+Return exec $terminal
 
 # dmenu: combine run and drun in rofi
-bindsym $mod+d exec "rofi -combi-modi run,drun -show combi"
+bindsym $mod+d exec "rofi -combi-modi drun,run -show combi"
 #bindsym $mod+d exec dmenu_run -fn 'Ubuntu Mono-12'
 
 # bindsym --release Print exec imgur-screenshot
