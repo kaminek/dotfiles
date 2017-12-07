@@ -49,10 +49,10 @@ export DEFAULT_USER=$USER
 export ZSH=$HOME/.oh-my-zsh
 export PAGER=less
 
-if [ "$TERM" = "screen" ]; then
-  export TERM="screen-256color"
-else
+if [ "$TMUX" = "" ]; then
   export TERM="xterm-256color"
+else
+  export TERM="screen-256color"
 fi
 
 if _has hostname; then
