@@ -328,7 +328,7 @@ else
 fi
 
 # Command auto-correction.
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Command execution time stamp shown in the history command output.
 HIST_STAMPS="mm/dd/yyyy"
