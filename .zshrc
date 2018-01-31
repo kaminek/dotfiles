@@ -54,6 +54,8 @@ if [ "$TMUX" = "" ]; then
 else
   export TERM="screen-256color"
 fi
+# Use custom path for tmux socket
+export TMUX_TMPDIR=$HOME/.tmux
 
 if _has hostname; then
   HOSTNAME=`hostname`
