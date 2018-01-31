@@ -8,7 +8,6 @@
 #	╚═╝╚═════╝      ╚══╝╚══╝ ╚═╝     ╚═╝
 #
 ###############################################################################
-                                    
 
 # Constants
 set $mod Mod4
@@ -132,8 +131,8 @@ bindsym $mod+d exec "rofi -combi-modi drun,run -show combi"
 #bindsym $mod+d exec dmenu_run -fn 'Ubuntu Mono-12'
 
 # bindsym --release Print exec imgur-screenshot
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit"
-bindsym --release Print exec --no-startup-id scrot '%Y-%m-%d-%T-screenshot.png' -e 'mv $f ~/Pictures/screenshots'  notify-send 'Screnshot' 'taken. in ~/Pictures/screenshots'
+bindsym --release Print exec --no-startup-id scrot '%Y-%m-%d-%T-screenshot.png' -e 'mv $f ~/Pictures/screenshots'  notify-send 'screnshot' 'taken. in ~/pictures/screenshots'
+bindsym $mod+Shift+e exec i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' i3-msg exit
 
 # Audio controls (volume up, volume down, toggle mute)
 #bindsym XF86AudioRaiseVolume exec amixer -q set Master 5%+ && pkill -SIGRTMIN+3 i3blocks
