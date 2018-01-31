@@ -74,13 +74,20 @@ else
 fi
 export HOSTTYPE
 
+# Go installation directory
+export GOROOT=/usr/local/go
+# Go working dir
+export GOPATH=$HOME/Work/go
+
+# local home path
+export LOCAL_PATH=$HOME/.local/bin
 if _is Darwin; then
-	export PATH=$HOME/bin:/usr/local/bin:$PATH
+	export PATH=$HOME/bin:/usr/local/bin:$LOCAL_PATH:$PATH
 	export TERMINAL="iterm"
 	export VISUAL="atom"
 	DIRCOLORS=gdircolors
 elif _is Linux; then
-	export PATH=$HOME/bin:$HOME/.scripts:$PATH
+	export PATH=$HOME/bin:$LOCAL_PATH:$HOME/.scripts:$GOROOT/bin:$PATH
 	export ZSH=/home/$USER/.oh-my-zsh
 	export TERMINAL="urxvt"
 	export VISUAL="gvim"
