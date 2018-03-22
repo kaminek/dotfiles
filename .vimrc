@@ -375,8 +375,14 @@ if &term =~ "xterm-256color"
 "	set <PageDown>=[6~
 endif
 
+" Let use qwerty ;)
+nnoremap ; :
+
 " Change mapleader
 let mapleader = "\<Space>"
+
+" Used for MBP with touch bar
+inoremap jj <ESC>
 
 " Quit all
 nnoremap <Leader>qq :qa<cr>
@@ -417,6 +423,26 @@ nnoremap <leader>b :Buffers<CR>
 " Previous/Next location
 nnoremap <A-Right> <C-i>
 nnoremap <A-Left> <C-o>
+
+" Switch buffers with Alt-Left/Right
+nmap <silent> <M-Left> :bprev<CR>
+nmap <silent> <M-Right> :bnext<CR>
+vmap <silent> <M-Left> :bprev<CR>
+vmap <silent> <M-Right> :bnext<CR>
+nmap <silent> ˙ :bprev<CR>
+nmap <silent> ¬ :bnext<CR>
+vmap <silent> ˙ <Esc>:bprev<CR>
+vmap <silent> ¬<Esc>:bnext<CR>
+
+" Resize panes with Shift-Left/Right/Up/Down
+nnoremap <silent> <S-Up> :resize +1<CR>
+nnoremap <silent> <S-Down> :resize -1<CR>
+nnoremap <silent> <S-Right> :vertical resize +1<CR>
+nnoremap <silent> <S-Left> :vertical resize -1<CR>
+nnoremap <silent> [1;2A :resize +1<CR>
+nnoremap <silent> [1;2B :resize -1<CR>
+nnoremap <silent> [1;2C :vertical resize +1<CR>
+nnoremap <silent> [1;2D :vertical resize -1<CR>
 
 " Next, keep search matches in the middle of the window
 nnoremap n nzzzv
