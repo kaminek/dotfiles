@@ -232,6 +232,8 @@ Plugin 'morhetz/gruvbox'
 " Easy navigation
 Plugin 'scrooloose/nerdtree'
 Plugin 'junegunn/fzf.vim'
+Plugin 'tmux-plugins/vim-tmux'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " Awesome status line
 Plugin 'vim-airline/vim-airline'
