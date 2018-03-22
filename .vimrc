@@ -59,15 +59,9 @@ set encoding=utf-8 nobomb
 set binary
 set noeol
 
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists("&undodir")
-        set undodir=~/.vim/undo
-endif
-
-" Don’t create backups when editing files in certain directories
-set backupskip=/tmp/*,/private/tmp/*
+" No need to backup files anymore
+set nobackup
+set noswapfile
 
 " Give one virtual space at end of line
 set virtualedit=onemore
