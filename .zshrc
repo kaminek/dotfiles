@@ -43,6 +43,7 @@ _append_to_path() {
     export PATH="$1:$PATH" ;
   fi
 }
+
 # Enviroment variables
 
 export DEFAULT_USER=$USER
@@ -78,21 +79,21 @@ export HOSTTYPE
 export GOROOT=/usr/local/go
 # Go working dir
 export GOPATH=$HOME/Work/go
+_prepend_to_path $GOROOT/bin
 
 # Language env
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # local home path
-export LOCAL_PATH=$HOME/.local/bin
+export LOCAL_PATH=$HOME/.local
+_prepend_to_path $LOCAL_PATH
+
 if _is Darwin; then
-	export PATH=$HOME/bin:/usr/local/bin:$LOCAL_PATH:$PATH
 	export TERMINAL="iterm"
-	export VISUAL="atom"
+	export VISUAL="gvim"
 	DIRCOLORS=gdircolors
 elif _is Linux; then
-	export PATH=$HOME/bin:$LOCAL_PATH:$HOME/.scripts:$GOROOT/bin:$PATH
-	export ZSH=/home/$USER/.oh-my-zsh
 	export TERMINAL="urxvt"
 	export VISUAL="gvim"
 	DIRCOLORS=dircolors
