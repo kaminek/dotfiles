@@ -146,7 +146,8 @@ bindkey "^[[6~"   down-line-or-history
 #==============================================================================
 
 # source the script file
-source $HOME/.oh-my-zsh/tools/antigen.zsh
+#source $HOME/.oh-my-zsh/tools/antigen.zsh
+source /usr/local/share/antigen/antigen.zsh
 
 # configuration vars
 export ANTIGEN_PATH="$HOME/.antigen"
