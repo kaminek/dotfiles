@@ -79,6 +79,10 @@ export GOROOT=/usr/local/go
 # Go working dir
 export GOPATH=$HOME/Work/go
 
+# Language env
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # local home path
 export LOCAL_PATH=$HOME/.local/bin
 if _is Darwin; then
