@@ -1,0 +1,12 @@
+
+# editors
+alias v=vim
+alias gv=gvim
+
+# Git
+alias gg='git grep'
+alias ggp='git grep -p5'
+alias ggw='git grep -w'
+
+# ctags in OSX
+alias ctags=/usr/local/bin/ctags
