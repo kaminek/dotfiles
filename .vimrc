@@ -599,6 +599,8 @@ let g:ansible_name_highlight = 'd'
 let g:indentLine_char       = '┆'
 " let's match color scheme
 let g:indentLine_setColors = 1
+" Disable by default (can be toggled when needed)
+let g:indentLine_enabled = 0
 
 " SimplyFold:
 " Enable docstring preview
