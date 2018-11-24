@@ -1,6 +1,7 @@
 
 # editors
 alias v=vim
+alias vi=vim
 alias gv=gvim
 
 # Git
@@ -10,3 +11,6 @@ alias ggw='git grep -w'
 
 # ctags in OSX
 alias ctags=/usr/local/bin/ctags
+
+# list
+alias lt='l -t'
