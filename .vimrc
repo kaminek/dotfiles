@@ -246,6 +246,7 @@ Plugin 'ryanoasis/vim-devicons'
 
 " Text management
 Plugin 'terryma/vim-expand-region'
+Plugin 'tmhedberg/SimpylFold'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-commentary'
 
@@ -593,6 +594,10 @@ let g:ansible_name_highlight = 'd'
 let g:indentLine_char       = '┆'
 " let's match color scheme
 let g:indentLine_setColors = 1
+
+" SimplyFold:
+" Enable docstring preview
+let g:SimpylFold_docstring_preview = 1
 
 " FZF:
 " add fzf bin path
