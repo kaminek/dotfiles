@@ -361,6 +361,16 @@ autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 " json = javascript syntax highlight
 autocmd MyAutoCmd FileType json setlocal syntax=javascript
 
+"Python with virtualenv aware for YouCompleteMe plugin
+python3 << Endpy
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+Endpy
+
 " }}}
 
 "##############################################################################
