@@ -255,6 +255,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'godlygeek/tabular'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'saltstack/salt-vim'
+Plugin 'w0rp/ale'
 
 " Misc
 Plugin 'mhinz/vim-startify'
@@ -589,6 +590,8 @@ let g:airline#extensions#tabline#right_alt_sep = '|'
 " customize status line
 let g:airline_section_x = airline#section#create_right(['filetype'])
 let g:airline_section_z = airline#section#create(['%3P ', 'linenr', ':%c'])
+" ale integration
+let g:airline#extensions#ale#enabled = 1
 
 " Ansible_yml_syntax:
 let g:ansible_extra_syntaxes = "sh.vim ruby.vim"
@@ -653,3 +656,6 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
+" ALE:
+let g:airline#extensions#ale#enabled = 1
