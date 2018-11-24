@@ -250,6 +250,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-commentary'
+Plugin 'nvie/vim-flake8'
 
 " Language support
 Plugin 'godlygeek/tabular'
