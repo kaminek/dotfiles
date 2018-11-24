@@ -282,6 +282,9 @@ colorscheme gruvbox
 "colorscheme solarized
 "let g:solarized_termtrans=1
 
+" HL python code
+let python_highlight_all=1
+
 " Add 'TODO's markers for highlighting
 augroup vimrc_todo
     autocmd!
