@@ -14,3 +14,8 @@ alias ctags=/usr/local/bin/ctags
 
 # list
 alias lt='l -t'
+
+# List colored
+alias lc='colorls -a'
+alias lac='colorls -la'
+alias ltc='colorls -lt'
