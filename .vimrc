@@ -247,6 +247,7 @@ Plugin 'ryanoasis/vim-devicons'
 " Text management
 Plugin 'terryma/vim-expand-region'
 Plugin 'tmhedberg/SimpylFold'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-commentary'
 
@@ -532,6 +533,10 @@ nnoremap <Leader>i :IndentToggle<CR>
 " Allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
 
+" use YCM for goto definition
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+"
 "##############################################################################
 "			Plugins Management
 "##############################################################################
@@ -598,6 +603,25 @@ let g:indentLine_setColors = 1
 " SimplyFold:
 " Enable docstring preview
 let g:SimpylFold_docstring_preview = 1
+
+" YCM:
+" close window when done
+let g:ycm_autoclose_preview_window_after_completion = 1
+" Let YCM read tags from Ctags file
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_use_ultisnips_completer = 1
+" Completion for programming language's keyword
+let g:ycm_seed_identifiers_with_syntax = 1
+" Completion in comments
+let g:ycm_complete_in_comments = 1
+" Completion in string
+let g:ycm_complete_in_strings = 1
+
+let g:ycm_key_list_select_completion = ['<C-j>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-k>', '<Up>']
+
+" Goto definition with F3
+map <F3> :YcmCompleter GoTo<CR>
 
 " FZF:
 " add fzf bin path
