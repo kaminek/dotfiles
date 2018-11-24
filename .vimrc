@@ -258,6 +258,10 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'saltstack/salt-vim'
 Plugin 'w0rp/ale'
 
+" Snippet
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 " Misc
 Plugin 'mhinz/vim-startify'
 
@@ -673,3 +677,8 @@ let g:fzf_colors =
 
 " ALE:
 let g:airline#extensions#ale#enabled = 1
+
+" Utilsnip:
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
