@@ -85,9 +85,12 @@ _prepend_to_path $GOROOT/bin
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# local home path
-export LOCAL_PATH=$HOME/.local
+# local home bin path
+export LOCAL_PATH=$HOME/.local/bin
 _prepend_to_path $LOCAL_PATH
+
+# misc bin path
+_prepend_to_path /usr/local/sbin
 
 if _is Darwin; then
 	export TERMINAL="iterm"
