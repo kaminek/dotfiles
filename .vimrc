@@ -193,6 +193,10 @@ endif
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
 "}}}
 
 "##############################################################################
