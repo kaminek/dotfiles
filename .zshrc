@@ -367,7 +367,9 @@ man() {
     man "$@"
 }
 
-# Source files
+#==============================================================================
+# 			Source files
+#==============================================================================
 
 # zsh
 [[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
@@ -393,6 +395,9 @@ if _has fzf && _has ag; then
   --color info:108,prompt:109,spinner:108,pointer:168,marker:168
   '
 fi
+
+# autojump
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # Call upon launch
 screenfetch
