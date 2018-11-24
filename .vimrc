@@ -248,15 +248,9 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'terryma/vim-expand-region'
 
 " Language support
-Plugin 'vim-jp/vim-cpp'
-Plugin 'mitsuhiko/vim-python-combined'
-Plugin 'tpope/vim-git'
-Plugin 'fatih/vim-go'
-Plugin 'PotatoesMaster/i3-vim-syntax'
 Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'stephpy/vim-yaml'
-Plugin 'pearofducks/ansible-vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'saltstack/salt-vim'
 
 " Misc
 Plugin 'Yggdroot/indentLine'
