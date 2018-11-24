@@ -244,8 +244,10 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ryanoasis/vim-devicons'
 
-" Text objects
+" Text management
 Plugin 'terryma/vim-expand-region'
+Plugin 'Yggdroot/indentLine'
+Plugin 'tpope/vim-commentary'
 
 " Language support
 Plugin 'godlygeek/tabular'
@@ -253,8 +255,6 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'saltstack/salt-vim'
 
 " Misc
-Plugin 'Yggdroot/indentLine'
-Plugin 'tpope/vim-commentary'
 Plugin 'mhinz/vim-startify'
 
 call vundle#end()
