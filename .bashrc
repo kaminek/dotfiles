@@ -105,6 +105,8 @@ export EDITOR="vi"
 #			Misc
 #==============================================================================
 
+alias ls='ls -Ctr --file-type --color=auto'
+
 # enable color on ls
 if _has dircolors; then
   test -r $HOME/.dircolors && eval "$(dircolors -b $HOME/.dircolors)" \

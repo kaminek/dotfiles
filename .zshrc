@@ -344,9 +344,6 @@ if _is Darwin; then
 	alias ls='() { $(whence -p gls) -Ctr --file-type --color=auto $@ }'
 	export CLICOLOR="YES" # Equivalent to passing -G to ls.
 	export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
-else
-	alias ls='() { $(whence -p ls) -Ctr --file-type --color=auto $@ }'
-fi
 
 # Command auto-correction.
 ENABLE_CORRECTION="false"
