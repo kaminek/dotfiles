@@ -403,7 +403,8 @@ fi
   source /usr/local/etc/profile.d/autojump.sh
 
 # source local functions
-source $HOME/.local/bin/local_functions.sh
+[[ -f $HOME/.local/bin/local_functions.sh ]] && \
+  source $HOME/.local/bin/local_functions.sh
 
 # Call upon launch
 screenfetch
