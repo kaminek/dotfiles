@@ -93,13 +93,13 @@ _prepend_to_path $LOCAL_PATH
 _prepend_to_path /usr/local/sbin
 
 if _is Darwin; then
-	export TERMINAL="iterm"
-	export VISUAL="gvim"
-	DIRCOLORS=gdircolors
+  export TERMINAL="iterm"
+  export VISUAL="gvim"
+  DIRCOLORS=gdircolors
 elif _is Linux; then
-	export TERMINAL="urxvt"
-	export VISUAL="gvim"
-	DIRCOLORS=dircolors
+  export TERMINAL="urxvt"
+  export VISUAL="gvim"
+  DIRCOLORS=dircolors
 fi
 
 # editor
@@ -138,12 +138,12 @@ bindkey "\e[1;5D" backward-word
 bindkey "\e[3~"   delete-char
 bindkey "\e[2~"   quoted-insert
 bindkey "^H"      backward-delete-word
-bindkey '^i'      expand-or-complete-prefix
+bindkey "^i"      expand-or-complete-prefix
 
-bindkey '\ew'     kill-region
-bindkey -s '\el'  "ls\n"
-bindkey -s '\e.'  "..\n"
-bindkey '^r'      history-incremental-search-backward
+bindkey "\ew"     kill-region
+bindkey -s "\el"  "ls\n"
+bindkey -s "\e."  "..\n"
+bindkey "^r"      history-incremental-search-backward
 bindkey "^[[5~"   up-line-or-history
 bindkey "^[[6~"   down-line-or-history
 
@@ -192,7 +192,7 @@ autoload -Uz compinit
 #==============================================================================
 
 # Font
-POWERLEVEL9K_MODE='Knack Nerd Font'
+POWERLEVEL9K_MODE="Knack Nerd Font"
 
 # Prompt settings
 POWERLEVEL9K_STATUS_VERBOSE=false
@@ -211,9 +211,9 @@ POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=""
 
 # Context
 POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
-POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='green'
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND="green"
 POWERLEVEL9K_CONTEXT_TEMPLATE="%F{cyan}%n%f"
-POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND="black"
 
 # Dirs
 POWERLEVEL9K_DIR_HOME_BACKGROUND="cyan"
@@ -236,8 +236,8 @@ POWERLEVEL9K_STATUS_ERROR_BACKGROUND="235"
 POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
 
 # OS segment
-POWERLEVEL9K_OS_ICON_BACKGROUND='black'
-POWERLEVEL9K_LINUX_ICON='%F{cyan}\uf300 %F{white}arch%F{cyan}linux%f'
+POWERLEVEL9K_OS_ICON_BACKGROUND="black"
+POWERLEVEL9K_LINUX_ICON="%F{cyan}\uf300 %F{white}arch%F{cyan}linux%f"
 
 # VCS icons
 POWERLEVEL9K_VCS_GIT_ICON="\uf1d3"
@@ -260,9 +260,9 @@ POWERLEVEL9K_VCS_CLEAN_FOREGROUND="black"
 POWERLEVEL9K_SHOW_CHANGESET=true
 
 # Status
-POWERLEVEL9K_OK_ICON=$'\uf00c'
-POWERLEVEL9K_FAIL_ICON=$'\uf00d'
-POWERLEVEL9K_CARRIAGE_RETURN_ICON=$'\uf00d'
+POWERLEVEL9K_OK_ICON=$"\uf00c"
+POWERLEVEL9K_FAIL_ICON=$"\uf00d"
+POWERLEVEL9K_CARRIAGE_RETURN_ICON=$"\uf00d"
 
 # Ssh
 POWERLEVEL9K_SSH_FOREGROUND="yellow"
@@ -298,10 +298,10 @@ POWERLEVEL9K_OS_ICON_BACKGROUND="235"
 POWERLEVEL9K_OS_ICON_FOREGROUND="cyan"
 
 # Battery
-POWERLEVEL9K_BATTERY_LOW_FOREGROUND='red'
-POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='yellow'
-POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='green'
-POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
+POWERLEVEL9K_BATTERY_LOW_FOREGROUND="red"
+POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND="yellow"
+POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND="green"
+POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND="blue"
 
 # Time
 POWERLEVEL9K_TIME_FORMAT="%F{white}\uf017 %D{%I:%M}%f"
@@ -326,9 +326,9 @@ ZSH_HIGHLIGHT_STYLES[path_pathseparator]="fg=grey"
 ZSH_HIGHLIGHT_STYLES[alias]="fg=cyan"
 ZSH_HIGHLIGHT_STYLES[builtin]="fg=cyan"
 ZSH_HIGHLIGHT_STYLES[function]="fg=cyan"
-ZSH_HIGHLIGHT_STYLES[command]='fg=green'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green'
+ZSH_HIGHLIGHT_STYLES[command]="fg=green"
+ZSH_HIGHLIGHT_STYLES[precommand]="fg=green"
+ZSH_HIGHLIGHT_STYLES[hashed-command]="fg=green"
 ZSH_HIGHLIGHT_STYLES[commandseparator]="fg=yellow"
 ZSH_HIGHLIGHT_STYLES[redirection]="fg=magenta"
 ZSH_HIGHLIGHT_STYLES[bracket-level-1]="fg=cyan,bold"
@@ -340,10 +340,11 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
 
 if _is Darwin; then
-	# Prefer GNU version, since it respects dircolors.
-	alias ls='() { $(whence -p gls) -Ctr --file-type --color=auto $@ }'
-	export CLICOLOR="YES" # Equivalent to passing -G to ls.
-	export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+  # Prefer GNU version, since it respects dircolors.
+  alias ls="() { $(whence -p gls) -Ctr --file-type --color=auto $@ }"
+  export CLICOLOR="YES" # Equivalent to passing -G to ls.
+  export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+fi
 
 # Command auto-correction.
 ENABLE_CORRECTION="false"
@@ -352,7 +353,8 @@ ENABLE_CORRECTION="false"
 HIST_STAMPS="mm/dd/yyyy"
 
 # Improved less option
-export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
+export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case "
+  "--quit-if-one-screen --RAW-CONTROL-CHARS"
 
 # Colored man pages using less as pager
 man() {
@@ -381,23 +383,24 @@ if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
   source /usr/local/opt/fzf/shell/key-bindings.zsh
   source /usr/local/opt/fzf/shell/completion.zsh
 fi
+
 if [ -e ~/.fzf ]; then
   _append_to_path ~/.fzf/bin
   source ~/.fzf/shell/key-bindings.zsh
   source ~/.fzf/shell/completion.zsh
 fi
+
 if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+  export FZF_DEFAULT_COMMAND="ag --nocolor -g \"\""
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_DEFAULT_OPTS='
-  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
-  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
-  '
+  export FZF_DEFAULT_OPTS=" --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108"
+    " --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
 fi
 
 # autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
+[[ -f /usr/local/etc/profile.d/autojump.sh ]] && \
+  source /usr/local/etc/profile.d/autojump.sh
 
 # source local functions
 source $HOME/.local/bin/local_functions.sh
