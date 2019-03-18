@@ -260,6 +260,7 @@ Plugin 'prabirshrestha/asyncomplete.vim'
 Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
+Plugin 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
 
 " Snippet
 Plugin 'SirVer/ultisnips'
