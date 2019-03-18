@@ -256,6 +256,10 @@ Plugin 'godlygeek/tabular'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'saltstack/salt-vim'
 Plugin 'w0rp/ale'
+Plugin 'prabirshrestha/asyncomplete.vim'
+Plugin 'prabirshrestha/async.vim'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 
 " Snippet
 Plugin 'SirVer/ultisnips'
@@ -551,6 +555,10 @@ nnoremap <Leader>i :IndentToggle<CR>
 " Allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
 
+" Async tab completion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
 "
 "##############################################################################
@@ -660,3 +668,6 @@ let g:airline#extensions#ale#enabled = 1
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" LSP:
+let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
