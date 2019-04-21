@@ -86,6 +86,7 @@ _prepend_to_path $LOCAL_PATH
 
 # misc bin path
 _prepend_to_path /usr/local/sbin
+_prepend_to_path /usr/games
 
 if _is Darwin; then
 	export TERMINAL="iterm"
@@ -98,7 +99,7 @@ elif _is Linux; then
 fi
 
 # editor
-export EDITOR="vi"
+export EDITOR="vim"
 
 
 #==============================================================================
