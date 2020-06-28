@@ -422,4 +422,5 @@ fi
   source $HOME/.local/bin/local_functions.sh
 
 # Call upon launch if not in tmux
-! [[ -n $TMUX ]] && screenfetch -E
+! [[ -n $TMUX ]] && neofetch
+  _append_to_path ~/.fzf/bin
