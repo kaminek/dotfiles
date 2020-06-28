@@ -307,6 +307,8 @@ man() {
     man "$@"
 }
 
+# https://github.com/gsamokovarov/jump
+eval "$(jump shell)"
 
 #==============================================================================
 #       Source files
