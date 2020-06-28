@@ -1,17 +1,17 @@
 # vim:ft=zsh:ts=2:sw=2:sts:et:
 ###############################################################################
 #
-#		   ███████╗███████╗██╗  ██╗██████╗  ██████╗
-#		   ╚══███╔╝██╔════╝██║  ██║██╔══██╗██╔════╝
-#		     ███╔╝ ███████╗███████║██████╔╝██║
-#		    ███╔╝  ╚════██║██╔══██║██╔══██╗██║
-#		██╗███████╗███████║██║  ██║██║  ██║╚██████╗
-#		╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝
+#      ███████╗███████╗██╗  ██╗██████╗  ██████╗
+#      ╚══███╔╝██╔════╝██║  ██║██╔══██╗██╔════╝
+#        ███╔╝ ███████╗███████║██████╔╝██║
+#       ███╔╝  ╚════██║██╔══██║██╔══██╗██║
+#   ██╗███████╗███████║██║  ██║██║  ██║╚██████╗
+#   ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝
 #
 ###############################################################################
 
 #==============================================================================
-#			General
+#       General
 #==============================================================================
 
 # Internal functions
@@ -50,6 +50,9 @@ export DEFAULT_USER=$USER
 export ZSH=$HOME/.oh-my-zsh
 export PAGER=less
 
+# Working/Dev directory
+WORKING_DIR="Work"
+
 if [ "$TMUX" = "" ]; then
   export TERM="xterm-256color"
 else
@@ -75,11 +78,19 @@ else
 fi
 export HOSTTYPE
 
+# GoLang
 # Go installation directory
-export GOROOT=/usr/local/go
-# Go working dir
-export GOPATH=$HOME/Work/go
-_prepend_to_path $GOROOT/bin
+# export GOPATH="$HOME/$WORKING_DIR/go"
+# _prepend_to_path "$GOPATH/bin"
+# test -d "${GOPATH}" || mkdir "${GOPATH}"
+# test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
+
+if _is Darwin; then
+  export GOROOT="$(brew --prefix golang)/libexec"
+elif _is Linux; then
+  export GOROOT=/usr/local/go
+fi
+_prepend_to_path "$GOROOT/bin"
 
 # Language env
 export LC_ALL=en_US.UTF-8
@@ -103,17 +114,49 @@ elif _is Linux; then
 fi
 
 # editor
-export EDITOR="vi"
+export EDITOR="vim"
+
 
 #==============================================================================
-# 			Extra PATH
+#       Configuration
 #==============================================================================
+
+# Command auto-correction.
+ENABLE_CORRECTION="false"
+
+# History
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=1000000
+SAVEHIST=1000000
+
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+# ignore duplication command history list
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+# share command history data
+setopt share_history
+
+# use bash compatible failed globbing
+setopt nonomatch
+
+
+#==============================================================================
+#       Extra Custom PATH
+#==============================================================================
+
+# local bins
+_prepend_to_path $HOME/.bin
 
 # Mysql-client
 _prepend_to_path /usr/local/opt/mysql-client/bin
 
+
 #==============================================================================
-#			Key bindings
+#       Key bindings
 #==============================================================================
 
 # Install proper key bindings for Home, PgDn, PgUp, etc.
@@ -156,14 +199,7 @@ bindkey "^[[6~"   down-line-or-history
 
 
 #==============================================================================
-#			Antigen Zsh Plugin Manager
-#==============================================================================
-
-# use bash compatible failed globbing
-setopt nonomatch
-
-#==============================================================================
-#			Antigen Zsh Plugin Manager
+#       Antigen Zsh Plugin Manager
 #==============================================================================
 
 # source the script file
@@ -177,10 +213,10 @@ export ANTIGEN_LOG="$ANTIGEN_PATH/antigen.log"
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
+
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle sudo
 antigen bundle git
-antigen bundle heroku
 antigen bundle pip
 antigen bundle lein
 antigen bundle command-not-found
@@ -202,8 +238,9 @@ antigen apply
 
 autoload -Uz compinit
 
+
 #==============================================================================
-#			PowerLevel9K Theme
+#       PowerLevel9K Theme
 #==============================================================================
 
 # Font
@@ -328,11 +365,12 @@ POWERLEVEL9K_TIME_BACKGROUND="235"
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(host dir_writable dir virtualenv vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs status time)
 
+
 #==============================================================================
-#			Misc
+#       Misc
 #==============================================================================
 
-# Zsh-syntax-highlighting
+# # Zsh-syntax-highlighting
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 ZSH_HIGHLIGHT_PATTERNS+=("rm -rf *" "fg=white,bold,bg=red")
 typeset -A ZSH_HIGHLIGHT_STYLES
@@ -351,21 +389,17 @@ ZSH_HIGHLIGHT_STYLES[bracket-level-2]="fg=green,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-3]="fg=magenta,bold"
 ZSH_HIGHLIGHT_STYLES[bracket-level-4]="fg=yellow,bold"
 
+# Less
 # enable color on ls
 eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
+export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
+export CLICOLOR=1
 
 if _is Darwin; then
   # Prefer GNU version, since it respects dircolors.
   alias ls="() { $(whence -p gls) -Ctr --file-type --color=auto $@ }"
-  export CLICOLOR="YES" # Equivalent to passing -G to ls.
-  export LSCOLORS="exgxdHdHcxaHaHhBhDeaec"
+  # export CLICOLOR="YES" # Equivalent to passing -G to ls.
 fi
-
-# Command auto-correction.
-ENABLE_CORRECTION="false"
-
-# Command execution time stamp shown in the history command output.
-HIST_STAMPS="mm/dd/yyyy"
 
 # Improved less option
 export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case \
@@ -384,43 +418,36 @@ man() {
     man "$@"
 }
 
-# colored ssh using ChromaTerm--
-sshc() {
-  `which ssh` $* | ct
-}
 
 #==============================================================================
-# 			Source files
+#       Source files
 #==============================================================================
 
-# zsh
+# Zsh
 [[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
-# aliases
+
+# Aliases
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
-# fzf
-if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-  source /usr/local/opt/fzf/shell/key-bindings.zsh
-  source /usr/local/opt/fzf/shell/completion.zsh
-fi
+# FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-if [ -e ~/.fzf ]; then
-  _append_to_path ~/.fzf/bin
-  source ~/.fzf/shell/key-bindings.zsh
-  source ~/.fzf/shell/completion.zsh
-fi
-
-if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND="ag --nocolor -g \"\""
+# Custom FZF cmd
+# User ripgrep as search for fzf
+if _has fzf && _has rg; then
+  export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_DEFAULT_OPTS=" --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108\
-    --color info:108,prompt:109,spinner:108,pointer:168,marker:168"
+  export FZF_DEFAULT_OPTS='
+  --color fg:242,bg:236,hl:65,fg+:15,bg+:239,hl+:108
+  --color info:108,prompt:109,spinner:108,pointer:168,marker:168
+  '
 fi
 
-# autojump
-[[ -f /usr/local/etc/profile.d/autojump.sh ]] && \
-  source /usr/local/etc/profile.d/autojump.sh
+# python certs
+export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
+export SSL_CERT_FILE=/usr/local/etc/openssl/cert.requests.pem
+
 
 # source local functions
 [[ -f $HOME/.local/bin/local_functions.sh ]] && \
@@ -428,4 +455,12 @@ fi
 
 # Call upon launch if not in tmux
 ! [[ -n $TMUX ]] && neofetch
-  _append_to_path ~/.fzf/bin
+
+
+if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
+
+complete -o nospace -C /usr/local/bin/vault vault
+
