@@ -3,16 +3,17 @@
 # A simple script rsync when events (inotify like) on $SRC happens, using OSX
 # fswatch and
 
-if [ "$#" -ne 2 ] || ! [ -d "$1" ]; then
-    echo "Usage: $0 SRC DST"
+# if [ "$#" -lt 2 ] || ! [ -d "$1" ]; then
+if [ "$#" -lt 2 ]; then
+    echo "Usage: see rsync manpage"
     exit -1;
 fi
 
 RSYNC=`which rsync`
 FLAGS="-av --rsync-path=\"sudo rsync\""
-SRC=$1
-DST=$2
-CMD="$RSYNC $FLAGS $SRC $DST"
+SRC=${@:(-2):1} # get the second last argument as src dir
+
+CMD="$RSYNC $FLAGS $@"
 
 # using ANSI escape code
 BLUE='\033[0;34m'
