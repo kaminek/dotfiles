@@ -154,6 +154,14 @@ bindkey "^r"      history-incremental-search-backward
 bindkey "^[[5~"   up-line-or-history
 bindkey "^[[6~"   down-line-or-history
 
+
+#==============================================================================
+#			Antigen Zsh Plugin Manager
+#==============================================================================
+
+# use bash compatible failed globbing
+setopt nonomatch
+
 #==============================================================================
 #			Antigen Zsh Plugin Manager
 #==============================================================================
