@@ -106,24 +106,49 @@ export EDITOR="vim"
 #			Misc
 #==============================================================================
 
+# Colored ls output
 alias ls='ls -Ctr --file-type --color=auto'
 
-# enable color on ls
+# enable directory color on ls
 if _has dircolors; then
   test -r $HOME/.dircolors && eval "$(dircolors -b $HOME/.dircolors)" \
     || eval "$(dircolors -b)"
 fi
 
 
-HISTSIZE=1000
-HISTFILESIZE=2000
-HIST_STAMPS="mm/dd/yyyy"
-HISTCONTROL=ignoredups:ignorespace
-# append to the history file, don't overwrite it
-shopt -s histappend
+# History
+
+# ignoreboth ignores commands starting with a space and duplicates. Erasedups
+# removes all previous dups in history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTFILE=$HOME/.bash_history          # be explicit about file path
+export HISTSIZE=100000                   # in memory history size
+export HISTFILESIZE=100000               # on disk history size
+export HISTTIMEFORMAT='%F %T '
+shopt -s histappend # append to history, don't overwrite it
+shopt -s cmdhist    # save multi line commands as one command
+
+# Save multi-line commands to the history with embedded newlines
+# instead of semicolons -- requries cmdhist to be on.
+shopt -s li
+
+# completion
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
+bind "set bell-style none" # no bell
+bind "set show-all-if-ambiguous On" # show list automatically, without double tab
 
 # Improved less option
 export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case --quit-if-one-screen --RAW-CONTROL-CHARS"
+
+# Ignore files with these suffixes when performing completion.
+export FIGNORE='.o:.pyc'
+
+# Ignore files that match these patterns when
+# performing filename expansion.
+export GLOBIGNORE='.DS_Store:*.o:*.pyc'
+
 
 # Colored man pages using less as pager
 man() {
@@ -138,25 +163,61 @@ man() {
     man "$@"
 }
 
+# check windows size if windows is resized
+shopt -s checkwinsize
+
+# autocorrect directory if mispelled
+shopt -s dirspell direxpand
+
+# auto cd if only the directory name is given
+shopt -s autocd
+
+#use extra globing features. See man bash, search extglob.
+shopt -s extglob
+
+#include .files when globbing.
+shopt -s dotglob
+
+# Do not exit an interactive shell upon reading EOF.
+set -o ignoreeof;
+
+# Check the hash table for a command name before searching $PATH.
+shopt -s checkhash
+
+# Enable `**` pattern in filename expansion to match all files,
+# directories and subdirectories.
+shopt -s globstar
+
+# Do not attempt completions on an empty line.
+shopt -s no_empty_cmd_completion
+
+# Case-insensitive filename matching in filename expansion.
+shopt -s nocaseglob
+
+# https://github.com/gsamokovarov/jump
+eval "$(jump shell)"
+
+# https://github.com/direnv/direnv
+eval "$(direnv hook bash)"
+
+
 #==============================================================================
-# 			Source files
+#    Source files
 #==============================================================================
 
-# aliases
+# Custom functions
+[ -f $HOME/.local/bin/local_functions.sh ] && \
+  source $HOME/.local/bin/local_functions.sh
+
+# Aliases
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
-# fzf
-if [ -e /usr/local/opt/fzf/shell/completion.zsh ]; then
-  source /usr/local/opt/fzf/shell/key-bindings.zsh
-  source /usr/local/opt/fzf/shell/completion.zsh
-fi
-if [ -e ~/.fzf ]; then
-  _append_to_path ~/.fzf/bin
-  source ~/.fzf/shell/key-bindings.zsh
-  source ~/.fzf/shell/completion.zsh
-fi
-if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --nocolor -g ""'
+# FZF
+[ -f ~/.fzf.bash  ] && source ~/.fzf.bash
+
+# User ripgrep as search for fzf
+if _has fzf && _has rg; then
+  export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_DEFAULT_OPTS='
@@ -165,10 +226,3 @@ if _has fzf && _has ag; then
   '
 fi
 
-# autojump
-[ -f /usr/local/etc/profile.d/autojump.sh ] && \
-  source /usr/local/etc/profile.d/autojump.sh
-
-# source local functions
-[ -f $HOME/.local/bin/local_functions.sh ] && \
-  source $HOME/.local/bin/local_functions.sh
