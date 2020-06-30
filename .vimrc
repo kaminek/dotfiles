@@ -230,8 +230,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
 
 " Color themes
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'morhetz/gruvbox'
+Plugin 'fatih/molokai'
 
 " Easy navigation
 Plugin 'scrooloose/nerdtree'
@@ -287,9 +286,9 @@ set background=dark
 "set background=light
 
 " Colorscheme
-colorscheme gruvbox
-"colorscheme solarized
-"let g:solarized_termtrans=1
+let g:rehash256 = 1
+let g:molokai_original = 1
+colorscheme molokai
 
 " HL python code
 let python_highlight_all=1
