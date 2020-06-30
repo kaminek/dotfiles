@@ -205,76 +205,68 @@ set foldlevel=99
 " {{{
 
 " Check plugin manager or warn
-if filereadable(glob("$HOME/.vim/bundle/Vundle.vim/autoload/vundle.vim"))
-	" Set the runtime path to include Vundle and initialize
-	set rtp+=~/.vim/bundle/Vundle.vim
+if filereadable(glob("$HOME/.vim/autoload/plug.vim"))
 else
 	echohl WarningMsg
-	echo "Vim Vundle plugin manager is not installed!"
+	echo "Vim Plug plugins manager is not installed! please checkout https://github.com/junegunn/vim-plug"
 	echohl None
 endif
 
-" Use bash shell to avoid plugins manager errors
-set shell=/bin/bash
-call vundle#begin()
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
 
+call plug#begin('~/.vim/plugged')
 " Add other plugins here
 
 " Git tool
-Plugin 'tpope/vim-fugitive'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " Ctags
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 " Color themes
-Plugin 'fatih/molokai'
+Plug 'fatih/molokai'
 
 " Easy navigation
-Plugin 'scrooloose/nerdtree'
-Plugin 'junegunn/fzf.vim'
-Plugin 'tmux-plugins/vim-tmux'
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'scrooloose/nerdtree'
+Plug 'junegunn/fzf.vim'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Awesome status line
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'ryanoasis/vim-devicons'
 
 " Text management
-Plugin 'terryma/vim-expand-region'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'Yggdroot/indentLine'
-Plugin 'tpope/vim-commentary'
-Plugin 'nvie/vim-flake8'
-Plugin 'jiangmiao/auto-pairs'
+Plug 'terryma/vim-expand-region'
+Plug 'tmhedberg/SimpylFold'
+Plug 'Yggdroot/indentLine'
+Plug 'tpope/vim-commentary'
+Plug 'nvie/vim-flake8'
+Plug 'jiangmiao/auto-pairs'
 
 " Language support
-Plugin 'godlygeek/tabular'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'saltstack/salt-vim'
-Plugin 'w0rp/ale'
-Plugin 'prabirshrestha/asyncomplete.vim'
-Plugin 'prabirshrestha/async.vim'
-Plugin 'prabirshrestha/vim-lsp'
-Plugin 'prabirshrestha/asyncomplete-lsp.vim'
-Plugin 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
-Plugin 'fatih/vim-go'
-Plugin 'uarun/vim-protobuf'
+Plug 'godlygeek/tabular'
+Plug 'sheerun/vim-polyglot'
+Plug 'saltstack/salt-vim'
+Plug 'w0rp/ale'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
+Plug 'fatih/vim-go'
+Plug 'uarun/vim-protobuf'
 
 " Snippet
-Plugin 'SirVer/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 " Misc
-Plugin 'mhinz/vim-startify'
-Plugin 'tpope/vim-surround'
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-surround'
 
-call vundle#end()
-filetype plugin indent on
-
+call plug#end()
 " }}}
 
 "##############################################################################
