@@ -249,6 +249,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'Yggdroot/indentLine'
 Plugin 'tpope/vim-commentary'
 Plugin 'nvie/vim-flake8'
+Plugin 'jiangmiao/auto-pairs'
 
 " Language support
 Plugin 'godlygeek/tabular'
@@ -261,6 +262,7 @@ Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
 Plugin 'fatih/vim-go'
+Plugin 'uarun/vim-protobuf'
 
 " Snippet
 Plugin 'SirVer/ultisnips'
@@ -268,6 +270,7 @@ Plugin 'honza/vim-snippets'
 
 " Misc
 Plugin 'mhinz/vim-startify'
+Plugin 'tpope/vim-surround'
 
 call vundle#end()
 filetype plugin indent on
