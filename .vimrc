@@ -260,6 +260,7 @@ Plugin 'prabirshrestha/async.vim'
 Plugin 'prabirshrestha/vim-lsp'
 Plugin 'prabirshrestha/asyncomplete-lsp.vim'
 Plugin 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
+Plugin 'fatih/vim-go'
 
 " Snippet
 Plugin 'SirVer/ultisnips'
@@ -691,3 +692,12 @@ if executable('ccls')
       \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
       \ })
 endif
+
+" Go-vim:
+let g:go_highlight_structs = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_fields = 1
+" let g:go_highlight_build_constraints = 1
