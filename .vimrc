@@ -227,9 +227,9 @@ Plug 'majutsushi/tagbar'
 Plug 'fatih/molokai'
 
 " Easy navigation
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf.vim'
-Plug 'tmux-plugins/vim-tmux'
+Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'christoomey/vim-tmux-navigator'
 
 " Awesome status line
@@ -258,6 +258,14 @@ Plug 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
 Plug 'fatih/vim-go'
 Plug 'uarun/vim-protobuf'
 
+" Syntax
+Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
+Plug 'elzr/vim-json', {'for' : 'json'}
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'cespare/vim-toml', {'for' : 'toml'}
+Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
+Plug 'plasticboy/vim-markdown' , {'for' : 'markdown'}
+
 " Snippet
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
@@ -265,6 +273,10 @@ Plug 'honza/vim-snippets'
 " Misc
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
+Plug 'ConradIrwin/vim-bracketed-paste'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  } " Updates fzf
+Plug 'roxma/vim-tmux-clipboard'
+Plug 'tmux-plugins/vim-tmux-focus-events'
 
 call plug#end()
 " }}}
