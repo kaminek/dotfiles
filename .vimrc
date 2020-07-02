@@ -465,7 +465,7 @@ vmap <silent> <M-Right> :bnext<CR>
 nmap <silent> ˙ :bprev<CR>
 nmap <silent> ¬ :bnext<CR>
 vmap <silent> ˙ <Esc>:bprev<CR>
-vmap <silent> ¬<Esc>:bnext<CR>
+vmap <silent> ¬ <Esc>:bnext<CR>
 
 " Resize panes with Shift-Left/Right/Up/Down
 nnoremap <silent> <S-Up> :resize +1<CR>
