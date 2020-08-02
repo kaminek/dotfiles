@@ -242,23 +242,25 @@ Plug 'terryma/vim-expand-region'
 Plug 'tmhedberg/SimpylFold'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
-Plug 'nvie/vim-flake8'
 Plug 'jiangmiao/auto-pairs'
 
 " Language support
-Plug 'godlygeek/tabular'
 Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
-Plug 'uarun/vim-protobuf'
+Plug 'nvie/vim-flake8'
 
 " Syntax
+Plug 'godlygeek/tabular'
 Plug 'ekalinin/Dockerfile.vim', {'for' : 'Dockerfile'}
 Plug 'elzr/vim-json', {'for' : 'json'}
+Plug 'saltstack/salt-vim', {'for' : 'sls'}
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'cespare/vim-toml', {'for' : 'toml'}
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 Plug 'plasticboy/vim-markdown' , {'for' : 'markdown'}
+Plug 'junegunn/goyo.vim', { 'for': 'markdown' }
+Plug 'uarun/vim-protobuf', {'for' : 'proto'}
 
 " Misc
 Plug 'mhinz/vim-startify'
