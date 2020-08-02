@@ -688,9 +688,6 @@ else
   " Installed following github repo
   set rtp+=~/.fzf
 endif
-"
-" Tell ack.vim to use ag (the Silver Searcher) instead
-let g:ackprg = 'ag --vimgrep'
 
 " Customize fzf colors to match the current color scheme
 let g:fzf_colors =
@@ -708,33 +705,6 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" ALE:
-let g:airline#extensions#ale#enabled = 1
-
-" Utilsnip:
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" LSP:
-let g:lsp_diagnostics_enabled = 0         " disable diagnostics support
-
-" Asyncomplete:
-let g:asyncomplete_auto_popup = 1
-let g:asyncomplete_smart_completion = 0
-let g:asyncomplete_remove_duplicates = 1
-
-" Register ccls C++ lanuage server:
-if executable('ccls')
-   au User lsp_setup call lsp#register_server({
-      \ 'name': 'ccls',
-      \ 'cmd': {server_info->['ccls']},
-      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
-      \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-      \ })
-endif
-
 " Go-vim:
 let g:go_highlight_structs = 1
 let g:go_highlight_functions = 1
@@ -742,4 +712,3 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_fields = 1
-" let g:go_highlight_build_constraints = 1
