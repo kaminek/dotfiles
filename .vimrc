@@ -248,13 +248,7 @@ Plug 'jiangmiao/auto-pairs'
 " Language support
 Plug 'godlygeek/tabular'
 Plug 'sheerun/vim-polyglot'
-Plug 'saltstack/salt-vim'
-Plug 'w0rp/ale'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'ryanolsonx/vim-lsp-python' " After vim-lsp, used to register python
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 Plug 'uarun/vim-protobuf'
 
@@ -266,15 +260,10 @@ Plug 'cespare/vim-toml', {'for' : 'toml'}
 Plug 'fatih/vim-nginx' , {'for' : 'nginx'}
 Plug 'plasticboy/vim-markdown' , {'for' : 'markdown'}
 
-" Snippet
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
 " Misc
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'ConradIrwin/vim-bracketed-paste'
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install()  }  } " Updates fzf
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 
@@ -550,29 +539,75 @@ nmap <Leader>P "+P
 vmap <Leader>p "+p
 vmap <Leader>P "+P
 
-" Ctags management
-nmap <F4> :TagbarToggle<CR>
-nnoremap <leader>. :Tags<CR>
-nnoremap ù <C-]><CR>
-nnoremap t :tnext<CR>
-nnoremap T :tprevious<CR>
-
 " enable/disable indentation
 nnoremap <Leader>i :IndentToggle<CR>
 
 " Allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
 
-" Async tab completion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
-imap <c-space> <Plug>(asyncomplete_force_refresh)
+" CoC
+nmap <silent> gd <Plug>(coc-definition)
 
-" Lsp
-nnoremap <C-]> :LspDefinition<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
-"
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other
+" plugin."
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+
 "##############################################################################
 "			Plugins Management
 "##############################################################################
