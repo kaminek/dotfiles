@@ -221,7 +221,11 @@ bindkey "^[[6~"   down-line-or-history
 
 # source the script file
 #source $HOME/.oh-my-zsh/tools/antigen.zsh
-source /usr/local/share/antigen/antigen.zsh
+if _is Darwin; then
+  source /usr/local/share/antigen/antigen.zsh
+elif _is Linux; then
+  source /usr/share/zsh/share/antigen.zsh
+fi
 
 # configuration vars
 export ANTIGEN_PATH="$HOME/.antigen"
