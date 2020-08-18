@@ -306,7 +306,12 @@ eval "$(jump shell)"
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if _is Darwin; then
+  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+elif _is Linux; then
+  [ -f ~/.fzf/shell/completion.zsh ] && source ~/.fzf/shell/completion.zsh
+  [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+fi
 
 # Custom FZF cmd
 # User ripgrep as search for fzf
