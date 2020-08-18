@@ -265,7 +265,7 @@ autoload -Uz compinit
 
 # Less
 # enable color on ls
-eval `$DIRCOLORS ~/.dircolors/dircolors.256dark`
+eval `$DIRCOLORS ~/.dircolors`
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
