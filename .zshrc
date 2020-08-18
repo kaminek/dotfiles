@@ -299,9 +299,6 @@ eval "$(jump shell)"
 #       Source files
 #==============================================================================
 
-# Zsh
-[[ -f $ZSH/oh-my-zsh.sh ]] && source $ZSH/oh-my-zsh.sh
-
 # Aliases
 [[ -f $HOME/.aliases ]] && source $HOME/.aliases
 
