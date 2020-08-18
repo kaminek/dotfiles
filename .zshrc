@@ -320,9 +320,16 @@ if _has fzf && _has rg; then
   '
 fi
 
-# python certs
-export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
-export SSL_CERT_FILE=/usr/local/etc/openssl/cert.requests.pem
+# certs bundle
+if _is Darwin; then
+  export CURL_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
+  export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
+  export SSL_CERT_FILE=/usr/local/etc/openssl/cert.requests.pem
+elif _is Linux; then
+  export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+  export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+  export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+fi
 
 
 # source local functions
