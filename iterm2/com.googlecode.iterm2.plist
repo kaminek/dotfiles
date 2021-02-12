@@ -725,11 +725,11 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 126 606 469 0 0 3840 2160 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>671 624 918 485 0 0 1920 1200 </string>
+	<string>814 2836 918 452 -1003 1200 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-703 1440 570 427 -1112 1200 3840 2160 </string>
+	<string>-2 0 3840 2137 0 0 3840 2160 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>247 69 570 427 0 0 1920 1177 </string>
+	<string>-405 1364 570 427 -1003 1200 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
 	<string>268 109 570 352 0 0 1920 1200 </string>
 	<key>New Bookmarks</key>
@@ -932,9 +932,9 @@
 			<key>Blinking Cursor</key>
 			<true/>
 			<key>Blur</key>
-			<false/>
+			<true/>
 			<key>Blur Radius</key>
-			<real>5.7519015704314711</real>
+			<real>18.427030456852794</real>
 			<key>Bold Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -1332,7 +1332,7 @@
 			<key>Normal Font</key>
 			<string>SauceCodeProNerdFontCompleteM-Regular 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
-			<false/>
+			<true/>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1479,7 +1479,7 @@
 			<key>Thin Strokes</key>
 			<integer>4</integer>
 			<key>Transparency</key>
-			<real>0.15782836294416244</real>
+			<real>0.089639514593908634</real>
 			<key>Triggers</key>
 			<array>
 				<dict>
@@ -1502,7 +1502,7 @@
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
-			<true/>
+			<false/>
 			<key>Use Tab Color</key>
 			<false/>
 			<key>Use Underline Color</key>
@@ -1587,7 +1587,7 @@
 	<key>ShowNewOutputIndicator</key>
 	<true/>
 	<key>SplitPaneDimmingAmount</key>
-	<real>0.20069861778846154</real>
+	<real>0.16932341746794871</real>
 	<key>StretchTabsToFillBar</key>
 	<false/>
 	<key>SuppressRestartAnnouncement</key>

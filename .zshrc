@@ -80,8 +80,8 @@ export HOSTTYPE
 
 # GoLang
 # Go installation directory
-# export GOPATH="$HOME/$WORKING_DIR/go"
-# _prepend_to_path "$GOPATH/bin"
+export GOPATH="$HOME/$WORKING_DIR/go"
+_prepend_to_path "$GOPATH/bin"
 # test -d "${GOPATH}" || mkdir "${GOPATH}"
 # test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
 
@@ -271,8 +271,8 @@ export CLICOLOR=1
 
 if _is Darwin; then
   # Prefer GNU version, since it respects dircolors.
-  alias ls="() { $(whence -p gls) -Ctr --file-type --color=auto $@ }"
-  # export CLICOLOR="YES" # Equivalent to passing -G to ls.
+  alias ls="$(whence -p gls) -Ctr --file-type --color=auto"
+  export CLICOLOR="YES" # Equivalent to passing -G to ls.
 fi
 
 # Improved less option
@@ -351,3 +351,9 @@ complete -o nospace -C /usr/local/bin/vault vault
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Scaleway CLI autocomplete initialization.
+eval "$(scw autocomplete script shell=zsh)"
+
+source "$HOME/.cargo/env"
+

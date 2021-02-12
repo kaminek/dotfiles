@@ -61,6 +61,7 @@ set noeol
 
 " No need to backup files anymore
 set nobackup
+set nowritebackup
 set noswapfile
 
 " Give one virtual space at end of line
@@ -137,7 +138,7 @@ set ruler
 set shortmess=atI
 
 " Show the current mode
-set showmode
+set noshowmode
 
 " Show the filename in the window titlebar
 set title
@@ -197,6 +198,22 @@ set scrolloff=3
 set foldmethod=indent
 set foldlevel=99
 
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 "}}}
 
 "##############################################################################
@@ -249,6 +266,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'fatih/vim-go'
 Plug 'nvie/vim-flake8'
+Plug 'rust-lang/rust.vim'
 
 " Syntax
 Plug 'godlygeek/tabular'
@@ -363,8 +381,20 @@ function! <SID>IndentationToggle()
 	:IndentLinesToggle
 endfunction
 
-" getting :Ggrep working perfectly
-command -nargs=+ Ggr execute 'silent Ggrep!' <q-args> | cw | redraw!
+" Ripgrep Next is a more enhanced version with reload fzf
+function! RgNextFzf(query)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--preview-window', 'down:30%', '--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 0, fzf#vim#with_preview(spec))
+endfunction
+
+" Rg as cmd
+command! -nargs=* -bang RgNext call RgNextFzf(<q-args>)
+
+" Rg with under cursor word
+command RgNextCurrWord call RgNextFzf(expand('<cword>'))
 
 autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 
@@ -524,7 +554,7 @@ vnoremap <F1> zf
 
 " Fugitive maps
 " call Ggrep custom function
-nnoremap <C-G>g :Ggr <cword><CR>
+nnoremap <C-G>g :RgNextCurrWord<CR>
 nnoremap <C-G>b :Gblame<CR>
 
 " Open fzf, replace the old CtrlP plugin
@@ -548,29 +578,29 @@ nnoremap <Leader>i :IndentToggle<CR>
 cmap w!! w !sudo tee > /dev/null %
 
 " CoC
-nmap <silent> gd <Plug>(coc-definition)
-
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
 
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other
-" plugin."
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
+inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -579,14 +609,11 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -608,6 +635,49 @@ nmap <leader>rn <Plug>(coc-rename)
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 
 
 "##############################################################################
@@ -691,6 +761,9 @@ else
   set rtp+=~/.fzf
 endif
 
+" custom window preview
+let g:fzf_preview_window = ['down:60%', 'ctrl-/']
+
 " Customize fzf colors to match the current color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -707,10 +780,17 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
-" Go-vim:
+" Go_vim:
 let g:go_highlight_structs = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_fields = 1
+"
+" disable vim-go :GoDef short cut (gd)
+" this is handled by LanguageClient [LC]
+let g:go_def_mapping_enabled = 0"
+
+" Rust
+let g:rustfmt_autosave = 1
