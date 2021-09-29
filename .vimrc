@@ -41,7 +41,7 @@ set clipboard=unnamed
 set wildmenu
 
 " Allow cursor keys in insert mode
-set esckeys
+" set esckeys
 
 " Allow backspace in insert mode
 set backspace=indent,eol,start
@@ -222,12 +222,12 @@ endif
 " {{{
 
 " Check plugin manager or warn
-if filereadable(glob("$HOME/.vim/autoload/plug.vim"))
-else
-	echohl WarningMsg
-	echo "Vim Plug plugins manager is not installed! please checkout https://github.com/junegunn/vim-plug"
-	echohl None
-endif
+" if filereadable(glob("$HOME/.vim/autoload/plug.vim"))
+" else
+" 	echohl WarningMsg
+" 	echo "Vim Plug plugins manager is not installed! please checkout https://github.com/junegunn/vim-plug"
+" 	echohl None
+" endif
 
 
 call plug#begin('~/.vim/plugged')
@@ -241,7 +241,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'majutsushi/tagbar'
 
 " Color themes
-Plug 'fatih/molokai'
+Plug 'gruvbox-community/gruvbox'
 
 " Easy navigation
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -286,6 +286,7 @@ Plug 'tpope/vim-surround'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'roxma/vim-tmux-clipboard'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'rrethy/vim-hexokinase', { 'do': 'make hexokinase' }
 
 call plug#end()
 " }}}
@@ -297,15 +298,20 @@ call plug#end()
 
 " Enable syntax highlighting
 syntax on
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors
+let g:gruvbox_contrast_dark = "hard"
+let g:gruvbox_contrast_light = "hard"
 
 " Set a Dark/light theme
 set background=dark
 "set background=light
 
 " Colorscheme
-let g:rehash256 = 1
-let g:molokai_original = 1
-colorscheme molokai
+" let g:rehash256 = 1
+" let g:molokai_original = 1
+colorscheme gruvbox
 
 " HL python code
 let python_highlight_all=1
@@ -401,15 +407,15 @@ autocmd MyAutoCmd FileType qf nnoremap <silent> <buffer> q :q<CR>
 " json = javascript syntax highlight
 autocmd MyAutoCmd FileType json setlocal syntax=javascript
 
-"Python with virtualenv aware for YouCompleteMe plugin
-python3 << Endpy
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-Endpy
+""Python with virtualenv aware for YouCompleteMe plugin
+"python3 << Endpy
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"    project_base_dir = os.environ['VIRTUAL_ENV']
+"    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"    execfile(activate_this, dict(__file__=activate_this))
+"Endpy
 
 " }}}
 
@@ -460,17 +466,17 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Buffers Management
-nnoremap <silent> <C-S-tab>    :bprevious<CR>
-nnoremap <silent> <C-PageUp>   :bprevious<CR>
-nnoremap <silent> <C-tab>      :bnext<CR>
-nnoremap <silent> <C-PageDown> :bnext<CR>
+" nnoremap <silent> <C-S-tab>    :bprevious<CR>
+" nnoremap <silent> <C-PageUp>   :bprevious<CR>
+" nnoremap <silent> <C-tab>      :bnext<CR>
+" nnoremap <silent> <C-PageDown> :bnext<CR>
 nnoremap <silent> qq           :Bclose<cr>
 nnoremap <silent> qall         :bufdo Bclose<cr>
 nnoremap <silent> rall         :bufdo edit<cr>
-inoremap <silent> <C-S-tab>    <Esc>:bprevious<CR>i
-inoremap <silent> <C-PageUp>   <Esc>:bprevious<CR>i
-inoremap <silent> <C-tab>      <Esc>:bnext<CR>i
-inoremap <silent> <C-PageDown> <Esc>:bnext<CR>i
+" inoremap <silent> <C-S-tab>    <Esc>:bprevious<CR>i
+" inoremap <silent> <C-PageUp>   <Esc>:bprevious<CR>i
+" inoremap <silent> <C-tab>      <Esc>:bnext<CR>i
+" inoremap <silent> <C-PageDown> <Esc>:bnext<CR>i
 " open buffers with fzf
 nnoremap <leader>b :Buffers<CR>
 
@@ -479,14 +485,18 @@ nnoremap <A-Right> <C-i>
 nnoremap <A-Left> <C-o>
 
 " Switch buffers with Alt-Left/Right
-nmap <silent> <M-Left> :bprev<CR>
-nmap <silent> <M-Right> :bnext<CR>
-vmap <silent> <M-Left> :bprev<CR>
-vmap <silent> <M-Right> :bnext<CR>
-nmap <silent> ˙ :bprev<CR>
-nmap <silent> ¬ :bnext<CR>
-vmap <silent> ˙ <Esc>:bprev<CR>
-vmap <silent> ¬ <Esc>:bnext<CR>
+nnoremap <Leader>h :bprev<CR>
+nnoremap <Leader>l :bnext<CR>
+vnoremap <Leader>h :bprev<CR>
+vnoremap <Leader>l :bnext<CR>
+nnoremap <A-h> :bprev<CR>
+nnoremap <A-l> :bnext<CR>
+vnoremap <A-h> :bprev<CR>
+vnoremap <A-l> :bnext<CR>
+" nmap <silent> ˙ :bprev<CR>
+" nmap <silent> ¬ :bnext<CR>
+" vmap <silent> ˙ <Esc>:bprev<CR>
+" vmap <silent> ¬ <Esc>:bnext<CR>
 
 " Resize panes with Shift-Left/Right/Up/Down
 nnoremap <silent> <S-Up> :resize +1<CR>
@@ -686,10 +696,10 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 
 " NerdTree:
-" Open NERDTree automatically when vim starts up
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-autocmd MyAutoCmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" " Open NERDTree automatically when vim starts up
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd MyAutoCmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let NERDTreeShowBookmarks=1
 let NERDTreeShowHidden=1
@@ -700,7 +710,7 @@ map <C-t> :NERDTreeToggle<CR>
 
 " NERDTree_git:
 " Customize symboles
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
                         \ "Modified"  : "✹",
                         \ "Staged"    : "✚",
                         \ "Untracked" : "✭",
@@ -713,7 +723,7 @@ let g:NERDTreeIndicatorMapCustom = {
                         \ }
 
 " Airline:
-let g:airline_theme = 'dark'
+let g:airline_theme = 'gruvbox'
 let g:airline_powerline_fonts = 1
 " Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 1
@@ -794,3 +804,6 @@ let g:go_def_mapping_enabled = 0"
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" vim colors
+let g:Hexokinase_highlighters = ['backgroundfull']

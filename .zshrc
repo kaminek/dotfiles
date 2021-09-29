@@ -80,7 +80,7 @@ export HOSTTYPE
 
 # GoLang
 # Go installation directory
-export GOPATH="$HOME/$WORKING_DIR/go"
+export GOPATH="$HOME/.go"
 _prepend_to_path "$GOPATH/bin"
 # test -d "${GOPATH}" || mkdir "${GOPATH}"
 # test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
@@ -88,7 +88,7 @@ _prepend_to_path "$GOPATH/bin"
 if _is Darwin; then
   export GOROOT="$(brew --prefix golang)/libexec"
 elif _is Linux; then
-  export GOROOT=/usr/local/go
+  # export GOROOT=/usr/local/go
 fi
 _prepend_to_path "$GOROOT/bin"
 
@@ -103,6 +103,10 @@ _prepend_to_path $LOCAL_PATH
 # misc bin path
 _prepend_to_path /usr/local/sbin
 
+# Cargo bin path
+_prepend_to_path $HOME/.cargo/bin
+
+
 if _is Darwin; then
   export TERMINAL="iterm"
   export VISUAL="gvim"
@@ -116,13 +120,6 @@ fi
 # editor
 export EDITOR="vim"
 
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 #==============================================================================
 #       Configuration
@@ -250,9 +247,6 @@ antigen bundle zsh-users/zsh-completions
 antigen bundle zdharma/fast-syntax-highlighting
 #antigen bundle colored-man-pages
 
-# Load the theme.
-antigen theme romkatv/powerlevel10k
-
 # Apply changes
 antigen apply
 
@@ -292,9 +286,6 @@ man() {
     man "$@"
 }
 
-# https://github.com/gsamokovarov/jump
-eval "$(jump shell)"
-
 #==============================================================================
 #       Source files
 #==============================================================================
@@ -306,8 +297,8 @@ eval "$(jump shell)"
 if _is Darwin; then
   [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 elif _is Linux; then
-  [ -f ~/.fzf/shell/completion.zsh ] && source ~/.fzf/shell/completion.zsh
-  [ -f ~/.fzf/shell/key-bindings.zsh ] && source ~/.fzf/shell/key-bindings.zsh
+  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 fi
 
 # Custom FZF cmd
@@ -321,6 +312,30 @@ if _has fzf && _has rg; then
   --color info:144,prompt:161,spinner:135,pointer:135,marker:118
   '
 fi
+
+SSH_ENV="$HOME/.ssh/agent-environment"
+
+function start_agent {
+    echo "Initialising new SSH agent..."
+    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+    echo succeeded
+    chmod 600 "${SSH_ENV}"
+    . "${SSH_ENV}" > /dev/null
+    /usr/bin/ssh-add;
+}
+
+# Source SSH settings, if applicable
+
+if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+        start_agent;
+    }
+else
+    start_agent;
+fi
+
 
 # certs bundle
 if _is Darwin; then
@@ -338,6 +353,10 @@ fi
 [[ -f $HOME/.local/bin/local_functions.sh ]] && \
   source $HOME/.local/bin/local_functions.sh
 
+# source custom env vars
+[[ -f $HOME/.custom_envs ]] && \
+  source $HOME/.custom_envs
+
 # Call upon launch if not in tmux
 ! [[ -n $TMUX ]] && neofetch
 
@@ -346,14 +365,12 @@ if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
-
 complete -o nospace -C /usr/local/bin/vault vault
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # Scaleway CLI autocomplete initialization.
-eval "$(scw autocomplete script shell=zsh)"
+[[ $commands[scw] ]] && eval "$(scw autocomplete script shell=zsh)"
 
-source "$HOME/.cargo/env"
+[[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
+# Starship prompt
+eval "$(starship init zsh)"
