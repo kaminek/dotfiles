@@ -1,0 +1,50 @@
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+[line_break]
+disabled = false
+
+[character]      # The name of the module we are configuring is "character"
+use_symbol_for_status = true
+symbol = "➟"     # The "symbol" segment is being set to "➜"
+error_symbol = "✗"
+style_success = "bold #00A652"
+style_failure = "bold #df382c"
+
+[time]
+disabled = true
+
+format = """
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$docker_context\
+$package\
+$cmake\
+$golang\
+$helm\
+$nodejs\
+$perl\
+$python\
+$ruby\
+$rust\
+$terraform\
+$vagrant\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$env_var\
+$custom\
+$lua\
+$jobs\
+$status\
+$line_break\
+$character
+"""
