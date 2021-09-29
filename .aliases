@@ -1,7 +1,8 @@
 
 # editors
-alias v=vim
-alias vi=vim
+alias v=lvim
+alias vi=lvim
+alias vim=lvim
 alias gv=gvim
 
 # Git
@@ -10,14 +11,14 @@ alias gg='git grep'
 alias ggp='git grep -p5'
 alias ggw='git grep -w'
 
-# ctags in OSX
-alias ctags=/usr/local/bin/ctags
-
 # list
 alias lt='l -t'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+
+# new list
+alias ll='exa -l -a --icons'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
