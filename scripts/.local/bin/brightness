@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+# Usage: brightness night
+if [ $# != 1 ]; then
+    echo "Usage $0 [day|evening|morning|night|dark]"
+    exit 1
+fi
+
+case $1 in
+   "day" )
+      BRIGHTNESS=60
+      TEMPERATURE=0x09
+      ;;
+   "evening" | "morning" )
+      BRIGHTNESS=30
+      TEMPERATURE=0x06
+      ;;
+   "night" )
+      BRIGHTNESS=5
+      TEMPERATURE=0x04
+      ;;
+   "dark" )
+      BRIGHTNESS=0
+      TEMPERATURE=0x04
+      ;;
+   * )
+      echo "Unknown time of day '$1'"
+      exit 1
+      ;;
+esac
+
+# bus 14 for my Dell U2720Q
+ddcutil --bus=14 setvcp 10 $BRIGHTNESS
+ddcutil --bus=14 setvcp 14 $TEMPERATURE
