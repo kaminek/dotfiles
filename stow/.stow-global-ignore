@@ -1,5 +1,4 @@
 \.gitattributes
-\.gitconfig
 \.mailmap
 \.git
 \.dockerignore
@@ -17,4 +16,3 @@ steam\.pid
 
 LICENSE.*
 README.*
-
