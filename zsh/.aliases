@@ -2,7 +2,6 @@
 # editors
 alias v=lvim
 alias vi=lvim
-alias vim=lvim
 alias gv=gvim
 
 # Git

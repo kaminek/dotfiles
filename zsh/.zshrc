@@ -81,7 +81,7 @@ export HOSTTYPE
 # GoLang
 # Go installation directory
 export GOPATH="$HOME/.go"
-_prepend_to_path "$GOPATH/bin"
+_append_to_path "$GOPATH/bin"
 # test -d "${GOPATH}" || mkdir "${GOPATH}"
 # test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
 
@@ -90,7 +90,6 @@ if _is Darwin; then
 elif _is Linux; then
   # export GOROOT=/usr/local/go
 fi
-_prepend_to_path "$GOROOT/bin"
 
 # Language env
 export LC_ALL=en_US.UTF-8
