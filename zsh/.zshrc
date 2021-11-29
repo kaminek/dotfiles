@@ -18,30 +18,30 @@
 
 # Returns whether the given command is executable or aliased.
 _has() {
-  return $( whence $1 >/dev/null 2>&1 )
+	return $(whence $1 >/dev/null 2>&1)
 }
 
 # Returns whether the current host type is what we think it is. (HOSTTYPE is
 # set later.)
 _is() {
-  return $( [ "$HOSTTYPE" = "$1" ] )
+	return $([ "$HOSTTYPE" = "$1" ])
 }
 
 # Returns whether the given statement executed cleanly.
 _try() {
-  return $( eval $* >/dev/null 2>&1 )
+	return $(eval $* >/dev/null 2>&1)
 }
 
 _prepend_to_path() {
-  if [ -d $1 ]; then
-    export PATH="$PATH:$1" ;
-  fi
+	if [ -d $1 ]; then
+		export PATH="$PATH:$1"
+	fi
 }
 
 _append_to_path() {
-  if [ -d $1 ]; then
-    export PATH="$1:$PATH" ;
-  fi
+	if [ -d $1 ]; then
+		export PATH="$1:$PATH"
+	fi
 }
 
 # Enviroment variables
@@ -50,46 +50,34 @@ export DEFAULT_USER=$USER
 export ZSH=$HOME/.oh-my-zsh
 export PAGER=less
 
-# Working/Dev directory
-WORKING_DIR="Work"
-
 if [ "$TMUX" = "" ]; then
-  export TERM="xterm-256color"
+	export TERM="xterm-256color"
 else
-  export TERM="screen-256color"
+	export TERM="screen-256color"
 fi
 # Use custom path for tmux socket
 export TMUX_TMPDIR=$HOME/.tmux
 
 if _has hostname; then
-  HOSTNAME=`hostname`
+	HOSTNAME=$(hostname)
 elif _has uname; then
-  HOSTNAME=`uname -n`
+	HOSTNAME=$(uname -n)
 else
-  HOSTNAME="unknown"
+	HOSTNAME="unknown"
 fi
 export HOSTNAME
 
 # HOSTTYPE = { Linux | OpenBSD | SunOS | etc. }
 if _has uname; then
-  HOSTTYPE=`uname -s`
+	HOSTTYPE=$(uname -s)
 else
-  HOSTTYPE="unknown"
+	HOSTTYPE="unknown"
 fi
 export HOSTTYPE
 
 # GoLang
-# Go installation directory
 export GOPATH="$HOME/.go"
 _append_to_path "$GOPATH/bin"
-# test -d "${GOPATH}" || mkdir "${GOPATH}"
-# test -d "${GOPATH}/src/github.com" || mkdir -p "${GOPATH}/src/github.com"
-
-if _is Darwin; then
-  export GOROOT="$(brew --prefix golang)/libexec"
-elif _is Linux; then
-  # export GOROOT=/usr/local/go
-fi
 
 # Language env
 export LC_ALL=en_US.UTF-8
@@ -105,20 +93,9 @@ _prepend_to_path /usr/local/sbin
 # Cargo bin path
 _prepend_to_path $HOME/.cargo/bin
 
-
-if _is Darwin; then
-  export TERMINAL="iterm"
-  export VISUAL="gvim"
-  DIRCOLORS=gdircolors
-elif _is Linux; then
-  export TERMINAL="urxvt"
-  export VISUAL="gvim"
-  DIRCOLORS=dircolors
-fi
-
-# editor
+export TERMINAL="alacritty"
+export VISUAL="gvim"
 export EDITOR="vim"
-
 
 #==============================================================================
 #       Configuration
@@ -146,15 +123,14 @@ setopt share_history
 # use bash compatible failed globbing
 setopt nonomatch
 
-
 #==============================================================================
 #       Functions
 #==============================================================================
 
 if [ -d $HOME/.zfuncs ]; then
-  fpath=($HOME/.zfuncs $fpath)
-  # Load custom function/cmd
-  autoload -Uz kp sshc
+	fpath=($HOME/.zfuncs $fpath)
+	# Load custom function/cmd
+	autoload -Uz kp sshc
 fi
 
 #==============================================================================
@@ -167,7 +143,6 @@ _prepend_to_path $HOME/.bin
 # Mysql-client
 _prepend_to_path /usr/local/opt/mysql-client/bin
 
-
 #==============================================================================
 #       Key bindings
 #==============================================================================
@@ -175,41 +150,40 @@ _prepend_to_path /usr/local/opt/mysql-client/bin
 # Install proper key bindings for Home, PgDn, PgUp, etc.
 bindkey -e
 
-bindkey "\e[1~"   beginning-of-line
-bindkey "\e[7~"   beginning-of-line
-bindkey "\eOH"    beginning-of-line
-bindkey "\e[H"    beginning-of-line
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[7~" beginning-of-line
+bindkey "\eOH" beginning-of-line
+bindkey "\e[H" beginning-of-line
 
-bindkey "\e[4~"   end-of-line
-bindkey "\e[8~"   end-of-line
-bindkey "\eOF"    end-of-line
-bindkey "\e[F"    end-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[8~" end-of-line
+bindkey "\eOF" end-of-line
+bindkey "\e[F" end-of-line
 
-bindkey "\e[5~"   beginning-of-history
-bindkey "\e[6~"   end-of-history
+bindkey "\e[5~" beginning-of-history
+bindkey "\e[6~" end-of-history
 
-bindkey "\e[5C"   forward-word
-bindkey "\e\e[C"  forward-word
-bindkey "\eOc"    emacs-forward-word
+bindkey "\e[5C" forward-word
+bindkey "\e\e[C" forward-word
+bindkey "\eOc" emacs-forward-word
 bindkey "\e[1;5C" forward-word
 
-bindkey "\e[5D"   backward-word
-bindkey "\e\e[D"  backward-word
-bindkey "\eOd"    emacs-backward-word
+bindkey "\e[5D" backward-word
+bindkey "\e\e[D" backward-word
+bindkey "\eOd" emacs-backward-word
 bindkey "\e[1;5D" backward-word
 
-bindkey "\e[3~"   delete-char
-bindkey "\e[2~"   quoted-insert
-bindkey "^H"      backward-delete-word
-bindkey "^i"      expand-or-complete-prefix
+bindkey "\e[3~" delete-char
+bindkey "\e[2~" quoted-insert
+bindkey "^H" backward-delete-word
+bindkey "^i" expand-or-complete-prefix
 
-bindkey "\ew"     kill-region
-bindkey -s "\el"  "ls\n"
-bindkey -s "\e."  "..\n"
-bindkey "^r"      history-incremental-search-backward
-bindkey "^[[5~"   up-line-or-history
-bindkey "^[[6~"   down-line-or-history
-
+bindkey "\ew" kill-region
+bindkey -s "\el" "ls\n"
+bindkey -s "\e." "..\n"
+bindkey "^r" history-incremental-search-backward
+bindkey "^[[5~" up-line-or-history
+bindkey "^[[6~" down-line-or-history
 
 #==============================================================================
 #       Antigen Zsh Plugin Manager
@@ -218,9 +192,9 @@ bindkey "^[[6~"   down-line-or-history
 # source the script file
 #source $HOME/.oh-my-zsh/tools/antigen.zsh
 if _is Darwin; then
-  source /usr/local/share/antigen/antigen.zsh
+	source /usr/local/share/antigen/antigen.zsh
 elif _is Linux; then
-  source /usr/share/zsh/share/antigen.zsh
+	source /usr/share/zsh/share/antigen.zsh
 fi
 
 # configuration vars
@@ -243,7 +217,7 @@ antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 
 # Syntax highlighting bundle.
-antigen bundle zdharma/fast-syntax-highlighting
+#antigen bundle z-shell/fast-syntax-highlighting
 #antigen bundle colored-man-pages
 
 # Apply changes
@@ -251,21 +225,20 @@ antigen apply
 
 autoload -Uz compinit
 
-
 #==============================================================================
 #       Misc
 #==============================================================================
 
 # Less
 # enable color on ls
-eval `$DIRCOLORS ~/.dircolors`
+#eval `$DIRCOLORS ~/.dircolors`
 export LSCOLORS=cxBxhxDxfxhxhxhxhxcxcx
 export CLICOLOR=1
 
 if _is Darwin; then
-  # Prefer GNU version, since it respects dircolors.
-  alias ls="$(whence -p gls) -Ctr --file-type --color=auto"
-  export CLICOLOR="YES" # Equivalent to passing -G to ls.
+	# Prefer GNU version, since it respects dircolors.
+	#alias ls="$(whence -p gls) -Ctr --file-type --color=auto"
+	export CLICOLOR="YES" # Equivalent to passing -G to ls.
 fi
 
 # Improved less option
@@ -274,15 +247,15 @@ export LESS="--tabs=4 --no-init --LONG-PROMPT --ignore-case \
 
 # Colored man pages using less as pager
 man() {
-  env \
-    LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-    LESS_TERMCAP_md=$(printf "\e[1;31m") \
-    LESS_TERMCAP_me=$(printf "\e[0m") \
-    LESS_TERMCAP_se=$(printf "\e[0m") \
-    LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-    LESS_TERMCAP_ue=$(printf "\e[0m") \
-    LESS_TERMCAP_us=$(printf "\e[1;32m") \
-    man "$@"
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+		man "$@"
 }
 
 #==============================================================================
@@ -294,19 +267,19 @@ man() {
 
 # FZF
 if _is Darwin; then
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+	[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 elif _is Linux; then
-  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
+	[ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
+	[ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
 fi
 
 # Custom FZF cmd
 # User ripgrep as search for fzf
 if _has fzf && _has rg; then
-  export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_DEFAULT_OPTS='
+	export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_DEFAULT_OPTS='
   --color fg:252,bg:233,hl:67,fg+:252,bg+:235,hl+:81
   --color info:144,prompt:161,spinner:135,pointer:135,marker:118
   '
@@ -315,59 +288,53 @@ fi
 SSH_ENV="$HOME/.ssh/agent-environment"
 
 function start_agent {
-    echo "Initialising new SSH agent..."
-    /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
-    echo succeeded
-    chmod 600 "${SSH_ENV}"
-    . "${SSH_ENV}" > /dev/null
-    /usr/bin/ssh-add;
+	echo "Initialising new SSH agent..."
+	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+	echo succeeded
+	chmod 600 "${SSH_ENV}"
+	. "${SSH_ENV}" >/dev/null
+	/usr/bin/ssh-add
 }
 
 # Source SSH settings, if applicable
 
 if [ -f "${SSH_ENV}" ]; then
-    . "${SSH_ENV}" > /dev/null
-    #ps ${SSH_AGENT_PID} doesn't work under cywgin
-    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-        start_agent;
-    }
+	. "${SSH_ENV}" >/dev/null
+	#ps ${SSH_AGENT_PID} doesn't work under cywgin
+	ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ >/dev/null || {
+		start_agent
+	}
 else
-    start_agent;
+	start_agent
 fi
-
 
 # certs bundle
 if _is Darwin; then
-  export CURL_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
-  export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.requests.pem
-  export SSL_CERT_FILE=/usr/local/etc/openssl/cert.requests.pem
+	export CURL_CA_BUNDLE=/usr/local/etc/ca-certificates/cert.pem
+	export REQUESTS_CA_BUNDLE=/usr/local/etc/ca-certificates/cert.pem
+	export SSL_CERT_FILE=/usr/local/etc/ca-certificates/cert.pem
 elif _is Linux; then
-  export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-  export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
-  export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+	export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+	export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+	export SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 fi
 
-
 # source local functions
-[[ -f $HOME/.local/bin/local_functions.sh ]] && \
-  source $HOME/.local/bin/local_functions.sh
+[[ -f $HOME/.local/bin/local_functions.sh ]] &&
+	source $HOME/.local/bin/local_functions.sh
 
 # source custom env vars
-[[ -f $HOME/.custom_envs ]] && \
-  source $HOME/.custom_envs
+[[ -f $HOME/.custom_envs ]] &&
+	source $HOME/.custom_envs
 
 # Call upon launch if not in tmux
 ! [[ -n $TMUX ]] && neofetch
-
 
 if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
 complete -o nospace -C /usr/local/bin/vault vault
-
-# Scaleway CLI autocomplete initialization.
-[[ $commands[scw] ]] && eval "$(scw autocomplete script shell=zsh)"
 
 [[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
