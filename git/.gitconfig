@@ -2,6 +2,10 @@
         email = kaminek92@gmail.com
         name = Amine Kherbouche
 
+# Override email with company's one
+[includeIf "gitdir:~/work/pro/"]
+        path = ~/work/pro/.gitconfig-pro
+
 [sendemail]
         smtpuser = kaminek92@gmail.com
         smtpencryption = ssl
@@ -209,7 +213,15 @@
         default = nothing
 
 [url "git@github.com:"]
-        insteadOf = https://github.com/
+    insteadOf = https://github.com/
 
-[url "git@git.services.upcloud.com:"]
-        insteadOf = https://git.services.upcloud.com/
+# Use custom config for this github organization
+# Configure ssh with:
+# #Host github-pro
+# #    HostName github.com
+# #    IdentityFile ~/.ssh/id_rsa # custom ssh key for this orga
+[url "git@github-pro:ebuzzing"]
+    insteadOf = https://github.com/ebuzzing
+
+[url "git@github-pro:ebuzzing"]
+    insteadOf = git@github.com:ebuzzing
