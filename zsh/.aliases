@@ -11,23 +11,17 @@ alias ggp='git grep -p5'
 alias ggw='git grep -w'
 
 # list
-alias lt='l -t'
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# new list
+alias ls='exa'
+alias lt='exa -t'
+alias ll='exa -alF'
+alias la='exa -A'
+alias l='exa -CF'
 alias ll='exa -l -a --icons'
 
-alias grep='grep --color=auto'
+alias grep='rg'
+#alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-
-
-# List colored
-alias lc='colorls -a'
-alias lac='colorls -la'
-alias ltc='colorls -lt'
 
 # git
 alias gcp='git commit --author="Amine Kherbouche <kaminek92@gmail.com>"'
@@ -37,3 +31,7 @@ alias sshu='ssh -o StrictHostKeyChecking=no'
 
 # kube
 alias k='kubectl'
+
+# AWS assume-role
+alias assume-role='function(){eval $(command assume-role -duration=8h $@);}'
+alias assume-role-short='function(){eval $(command assume-role $@);}'

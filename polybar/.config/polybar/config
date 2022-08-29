@@ -64,7 +64,7 @@ module-margin-right = 0
 
 modules-left = i3
 modules-center = power-menu mpd
-modules-right = bluetooth wlan eth pulseaudio xbacklight battery memory cpu temperature date
+modules-right = bluetooth wlan eth pulseaudio backlight battery memory cpu temperature date
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -151,7 +151,7 @@ label-mode-background = ${colors.primary}
 ; focused = Active workspace on focused monitor
 label-focused = %index%
 label-focused-background = ${colors.background-alt}
-; label-focused-underline= ${colors.primary}
+label-focused-underline = ${colors.primary}
 label-focused-padding = 1
 
 ; unfocused = Inactive workspace on any monitor
@@ -173,59 +173,36 @@ label-urgent-padding = 2
 ; label-separator = |
 
 
-[module/mpd]
-type = internal/mpd
-format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <label-song>    <bar-progress>   <label-time>
+;[module/mpd]
+;type = internal/mpd
+;format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <label-song>    <bar-progress>   <label-time>
+;
+;icon-prev = %{T3}%{T-}
+;icon-stop = %{T3}%{T-}
+;icon-play = %{T3}%{T-}
+;icon-pause = %{T3}%{T-}
+;icon-next = %{T3}%{T-}
+;
+;label-song-maxlen = 50
+;label-song-ellipsis = true
+;; Only applies if <bar-progress> is used
+;bar-progress-width = 30
+;bar-progress-indicator =
+;bar-progress-fill = %{T6}%{F#C140C1}%{F-}%{T-}
+;bar-progress-empty = %{T6}%{F#666}%{F-}%{T-}
 
-icon-prev = %{T3}%{T-}
-icon-stop = %{T3}%{T-}
-icon-play = %{T3}%{T-}
-icon-pause = %{T3}%{T-}
-icon-next = %{T3}%{T-}
 
-label-song-maxlen = 50
-label-song-ellipsis = true
-; Only applies if <bar-progress> is used
-bar-progress-width = 30
-bar-progress-indicator =
-bar-progress-fill = %{T6}%{F#C140C1}%{F-}%{T-}
-bar-progress-empty = %{T6}%{F#666}%{F-}%{T-}
-
-
-[module/xbacklight]
+[module/backlight]
 ; $ ls -1 /sys/class/backlight/
-type = internal/xbacklight
+type = internal/backlight
 card = intel_backlight
-; card = acpi_video0
-
-; Enable changing the backlight with the scroll wheel
-; NOTE: This may require additional configuration on some systems. Polybar will
-; write to `/sys/class/backlight/${self.card}/brightness` which requires polybar
-; to have write access to that file.
-; DO NOT RUN POLYBAR AS ROOT.
-; The recommended way is to add the user to the
-; `video` group and give that group write-privileges for the `brightness` file.
-; See the ArchWiki for more information:
-; https://wiki.archlinux.org/index.php/Backlight#ACPI
-; Default: false
-enable-scroll = true
+use-actual-brightness = true
+enable-scroll = false
 format = <label>
 format-prefix = "%{T3}%{T-} "
 format-prefix-foreground = ${colors.foreground}
 label = %percentage%%
 label-active-font = 3
-; ramp-0 = 
-; ramp-1 = 
-; ramp-2 =
-; ramp-3 =
-; ramp-4 =
-
-
-[module/backlight-acpi]
-inherit = module/xbacklight
-type = internal/backlight
-card = intel_backlight
-
 
 [module/cpu]
 type = internal/cpu
@@ -245,7 +222,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlan0
+interface = wlp0s20f3 
 interval = 5.0
 
 format-connected = <ramp-signal> <label-connected>
@@ -260,7 +237,7 @@ ramp-signal-foreground = ${colors.foreground}
 
 [module/wlan-extended]
 type = internal/network
-interface = wlan0
+interface = wlp0s20f3
 interval = 1.0
 
 format-connected = <ramp-signal> <label-connected>
@@ -279,7 +256,7 @@ ramp-signal-foreground = ${colors.foreground}
 
 [module/eth]
 type = internal/network
-interface = eth0
+interface = enp0s20f0u1u3
 interval = 5
 
 format-connected-underline = #55aa55
@@ -297,7 +274,7 @@ format-disconnected-underline = ${colors.warning}
 
 [module/eth-extended]
 type = internal/network
-interface = enp4s0
+interface = enp0s20f0u1u3
 interval = 5
 
 format-connected-underline = #55aa55
@@ -485,7 +462,7 @@ thermal-zone = 0
 ; to find path to desired file
 ; Default reverts to thermal zone setting
 ; hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
-hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon7/temp1_input
 
 ; Base temperature for where to start the ramp (in degrees celsius)
 ; Default: 0

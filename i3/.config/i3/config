@@ -14,6 +14,8 @@
 #Numlock enable
 exec numlockx
 
+exec setxkbmap -option caps:escape
+
 # Lockscreen
 #exec light-locker
 
@@ -21,8 +23,20 @@ exec numlockx
 exec xset s off
 exec xset -dpms
 
+# Dunst
+exec_always dunst -config $HOME/.config/dunst/dunstrc
+
+# Polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# polkit
+exec_always lxsession
+
 # network manager applet
-exec_always nm-applet
+exec_always nm-applet --indicator
+
+# bluetooth manager applet
+exec_always blueman-applet 
 
 #exec xss-lock -n "$HOME/.config/i3/scripts/brightness.sh screensaver" -l -- $HOME/.config/i3/scripts/lockscreen.sh --suspend
 
@@ -30,12 +44,10 @@ exec_always nm-applet
 exec_always feh --bg-fill $HOME/.config/i3/wallpapers
 
 # Picom
-# exec_always --no-startup-id picom
-exec_always /sbin/dunst -config $HOME/.config/dunst/dunstrc
+exec_always --no-startup-id picom -b
 
-# Run polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
+# screenshots
+exec_always flameshot
 
 # Always mute microphone at startup
 #exec_always amixer sset Capture nocap
@@ -88,8 +100,8 @@ set $default_gaps_inner 0
 set $default_gaps_outer 0
 smart_gaps on
 smart_borders on
-gaps inner 0
-gaps outer 0
+gaps inner 10
+gaps outer 10
 
 # Window borders
 for_window [class="^.*"] border pixel 2
@@ -293,12 +305,16 @@ for_window [window_type="menu"] floating enable
 
 # Program Workspaces
 assign [class="firefox|google-chrome"] $workspace1
-assign [class="Thunderbird"] $workspace9
-assign [class="Steam|Dota 2"] $workspace0
+assign [class="Slack"] $workspace3
+assign [class="Brave"] $workspace0
 
 # Floating default windows
 for_window [class="Lxappearance"] floating enable
-for_window [class="Seahorse"] floating enable
 for_window [class="Pavucontrol"] floating enable
+for_window [class="Blueman-manager"] floating enable,  resize set width 70 ppt height 40 ppt
+
+for_window [class="^zoom$" title="^Zoom($|\s)"] floating disable, border pixel $borderpx
+for_window [class="^zoom$" title="^zoom"] floating enable, border none
+no_focus   [class="^zoom$" title="^zoom"]
 
 # for_window [floating] resize set 1200 800; move absolute position center

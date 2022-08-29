@@ -1,3 +1,4 @@
+local M = {}
 -- Change Telescope navigation to use j and k for navigation and n and p for
 -- history in both input and normal mode. we use protected-mode (pcall) just in
 -- case the plugin wasn't loaded yet.
@@ -16,3 +17,5 @@ lvim.builtin.telescope.defaults.mappings = {
     ["<C-k>"] = actions.move_selection_previous,
   },
 }
+
+-- lvim.builtin.telescope.defaults.layout_strategy = "horizontal"

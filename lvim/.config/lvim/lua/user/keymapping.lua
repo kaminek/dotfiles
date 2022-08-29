@@ -16,3 +16,6 @@ lvim.builtin.which_key.mappings["t"] = {
   t = { "<cmd>TodoLocList <cr>", "Todo" },
   w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnosticss" },
 }
+-- " p: Paste in visual mode should not replace the default register with the
+-- " deleted text
+-- lvim.leader p "_dP
