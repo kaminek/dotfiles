@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# vim:ft=zsh:ts=2:sw=2:sts:et:
+# vim:ft=sh:ts=2:sw=2:sts:et:
 ###############################################################################
 #
 #      ███████╗███████╗██╗  ██╗██████╗  ██████╗
@@ -34,15 +34,17 @@ _try() {
 }
 
 _prepend_to_path() {
-	if [ -d $1 ]; then
-		export PATH="$PATH:$1"
+	if ! [ -d $1 ]; then
+		mkdir -p $1
 	fi
+	export PATH="$PATH:$1"
 }
 
 _append_to_path() {
-	if [ -d $1 ]; then
-		export PATH="$1:$PATH"
+	if ! [ -d $1 ]; then
+		mkdir -p $1
 	fi
+	export PATH="$1:$PATH"
 }
 
 # Enviroment variables
@@ -78,7 +80,8 @@ export HOSTTYPE
 
 # GoLang
 export GOPATH="$HOME/.go"
-_append_to_path "$GOPATH/bin"
+export GOBIN="$GOPATH/bin"
+_append_to_path $GOBIN
 
 # Language env
 export LC_ALL=en_US.UTF-8
@@ -97,6 +100,9 @@ _prepend_to_path $HOME/.cargo/bin
 export TERMINAL="alacritty"
 export VISUAL="gvim"
 export EDITOR="nvim"
+
+export GPG_KEYID=0x239BDC0C10526EC6
+export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 
 #==============================================================================
 #       Configuration
@@ -135,6 +141,22 @@ if [ -d $HOME/.zfuncs ]; then
 	autoload -Uz kp sshc
 fi
 
+SSH_ENV="$HOME/.ssh/agent-environment"
+function start_agent {
+	echo "Initialising new SSH agent..."
+	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
+	echo succeeded
+	chmod 600 "${SSH_ENV}"
+	. "${SSH_ENV}" >/dev/null
+	/usr/bin/ssh-add
+}
+
+function gpg_restart {
+	pkill gpg
+	pkill pinentry
+	pkill ssh-agent
+	eval $(gpg-agent --daemon --enable-ssh-support)
+}
 #==============================================================================
 #       Extra Custom PATH
 #==============================================================================
@@ -154,10 +176,9 @@ bindkey -e
 #       Zsh Plugin Manager
 #==============================================================================
 
-# zplug 
-if _is Darwin; then
-elif _is Linux; then
-  source /usr/share/zsh/scripts/zplug/init.zsh
+# zplug
+if _is Linux; then
+	source /usr/share/zsh/scripts/zplug/init.zsh
 fi
 
 zplug zsh-users/zsh-autosuggestions
@@ -168,10 +189,11 @@ zplug zdharma-continuum/fast-syntax-highlighting
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check; then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
+	printf "Install? [y/N]: "
+	if read -q; then
+		echo
+		zplug install
+	fi
 fi
 
 zplug load
@@ -211,52 +233,40 @@ fi
 # Custom FZF cmd
 # User ripgrep as search for fzf
 if _has fzf && _has fd; then
-  export FZF_COMPLETION_TRIGGER='~~'
-  export FZF_COMPLETION_OPTS='--border --info=inline'
+	export FZF_COMPLETION_TRIGGER='~~'
+	export FZF_COMPLETION_OPTS='--border --info=inline'
 	#export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
-  export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+	export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 	export FZF_DEFAULT_OPTS='
   --color fg:252,bg:233,hl:67,fg+:252,bg+:235,hl+:81
   --color info:144,prompt:161,spinner:135,pointer:135,marker:118
   '
-  # - The first argument to the function ($1) is the base path to start traversal
-  _fzf_compgen_path() {
-    fd --hidden --follow --exclude ".git" . "$1"
-  }
-  # Use fd to generate the list for directory completion
-  _fzf_compgen_dir() {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-  }
-  # (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
-  # - The first argument to the function is the name of the command.
-  # - You should make sure to pass the rest of the arguments to fzf.
-  #_fzf_comprun() {
-  #  local command=$1
-  #  shift
+	# - The first argument to the function ($1) is the base path to start traversal
+	_fzf_compgen_path() {
+		fd --hidden --follow --exclude ".git" . "$1"
+	}
+	# Use fd to generate the list for directory completion
+	_fzf_compgen_dir() {
+		fd --type d --hidden --follow --exclude ".git" . "$1"
+	}
+	# (EXPERIMENTAL) Advanced customization of fzf options via _fzf_comprun function
+	# - The first argument to the function is the name of the command.
+	# - You should make sure to pass the rest of the arguments to fzf.
+	#_fzf_comprun() {
+	#  local command=$1
+	#  shift
 
-  #  case "$command" in
-  #    cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
-  #    export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
-  #    ssh)          fzf "$@" --preview 'dig {}' ;;
-  #    *)            fzf "$@" ;;
-  #  esac
-  #}
+	#  case "$command" in
+	#    cd)           fzf "$@" --preview 'tree -C {} | head -200' ;;
+	#    export|unset) fzf "$@" --preview "eval 'echo \$'{}" ;;
+	#    ssh)          fzf "$@" --preview 'dig {}' ;;
+	#    *)            fzf "$@" ;;
+	#  esac
+	#}
 fi
 
-SSH_ENV="$HOME/.ssh/agent-environment"
-
-function start_agent {
-	echo "Initialising new SSH agent..."
-	/usr/bin/ssh-agent | sed 's/^echo/#echo/' >"${SSH_ENV}"
-	echo succeeded
-	chmod 600 "${SSH_ENV}"
-	. "${SSH_ENV}" >/dev/null
-	/usr/bin/ssh-add
-}
-
-# Source SSH settings, if applicable
-
+# SSH agent
 if [ -f "${SSH_ENV}" ]; then
 	. "${SSH_ENV}" >/dev/null
 	#ps ${SSH_AGENT_PID} doesn't work under cywgin
@@ -291,15 +301,22 @@ fi
 
 if _has kubectl; then
 	source <(kubectl completion zsh)
+	_prepend_to_path $HOME/.krew/bin
 fi
-
-# XXX:completion for k alias?
-#compdef __start_kubectl k
 
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
-complete -o nospace -C /usr/bin/terraform terraform
+# XXX:completion for k alias?
+#compdef __start_kubectl k
+
+if _has terraform; then
+	complete -o nospace -C /usr/bin/terraform terraform
+fi
+
+if _has aws; then
+	complete -C '/sbin/aws_completer' aws
+fi
 
 eval "$(zoxide init zsh)"
 
@@ -307,4 +324,3 @@ eval "$(zoxide init zsh)"
 
 # Starship prompt
 eval "$(starship init zsh)"
-

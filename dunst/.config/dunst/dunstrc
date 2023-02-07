@@ -166,7 +166,7 @@
     max_icon_size = 32
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/la-capitaine/apps/scalable:/usr/share/icons/la-capitaine/devices/scalable/
+    # icon_path = /usr/share/icons/la-capitaine/apps/scalable:/usr/share/icons/la-capitaine/devices/scalable/
 
     ### History ###
 
@@ -183,7 +183,7 @@
     # dmenu = /usr/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /sbin/firefox -new-tab
+    browser = /sbin/google-chrome-stable
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true

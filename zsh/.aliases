@@ -12,10 +12,9 @@ alias ggw='git grep -w'
 
 # list
 alias ls='exa'
-alias lt='exa -t'
-alias ll='exa -alF'
-alias la='exa -A'
-alias l='exa -CF'
+alias lt='exa -snew'
+alias la='exa'
+alias l='exa -F'
 alias ll='exa -l -a --icons'
 
 alias grep='rg'
@@ -27,10 +26,13 @@ alias egrep='egrep --color=auto'
 alias gcp='git commit --author="Amine Kherbouche <kaminek92@gmail.com>"'
 
 # ssh
-alias sshu='ssh -o StrictHostKeyChecking=no'
+alias sshu='ssh -o StrictHostKeyChecking=no -o PubkeyAcceptedAlgorithms=+ssh-rsa-cert-v01@openssh.com'
 
 # kube
 alias k='kubectl'
+
+# switch yubikey
+alias ykswitch='gpg-connect-agent "scd serialno" "learn --force" /bye'
 
 # AWS assume-role
 alias assume-role='function(){eval $(command assume-role -duration=8h $@);}'
