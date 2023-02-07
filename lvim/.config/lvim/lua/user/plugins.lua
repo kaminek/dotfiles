@@ -4,25 +4,32 @@ lvim.plugins = {
 
   -- colorschemas
   { "tiagovla/tokyodark.nvim" },
+  -- { "folke/tokyonight.nvim" },
   { "marko-cerovac/material.nvim" },
   { "navarasu/onedark.nvim" },
+  { "lunarvim/synthwave84.nvim" },
+  -- { "catppuccin/nvim", as = "catppuccin" },
+  -- {
+  --   "fgheng/winbar.nvim",
+  --   config = function()
+  --     require("user.winb").config()
+  --   end,
+  --   event = { "InsertEnter", "CursorMoved" },
+  --   disable = lvim.builtin.winbar_provider ~= "treesitter",
+  -- },
   {
-    "fgheng/winbar.nvim",
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
-      require("user.winb").config()
+      require("user.mason-tool-installer").config()
     end,
-    event = { "InsertEnter", "CursorMoved" },
-    disable = lvim.builtin.winbar_provider ~= "treesitter",
   },
   {
-    "SmiteshP/nvim-gps",
-    module_pattern = { "gps", "nvim-gps" },
-    config = function()
-      require("user.gps").config()
-    end,
-    requires = "nvim-treesitter/nvim-treesitter",
-    event = { "InsertEnter", "CursorMoved" },
-    disable = lvim.builtin.winbar_provider ~= "treesitter",
+    "ruifm/gitlinker.nvim",
+    -- event = "BufRead",
+    requires = "nvim-lua/plenary.nvim",
+    -- config = function()
+    --   require("user.gitlinker").config()
+    -- end,
   },
   -- {
   --   "b0o/incline.nvim",
@@ -62,10 +69,10 @@ lvim.plugins = {
   --   end,
   --   event = "BufRead",
   -- },
-  --     {"folke/tokyonight.nvim"},
 }
 
 -- Include plugins custom config
 
 -- telescope
+
 -- require "config.telescope"
