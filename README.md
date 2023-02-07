@@ -1,12 +1,25 @@
 # dotfiles
+
 My Personal Dotfiles
 
+## Install
 
-# Dependencies
+Dotfiles are managed by `stow`, to install the symlinks clone this repo and do:
 
-* zsh
-* oh-my-zsh
-* ripgrep
-* fzf
-* jump
-* direnv
+```bash
+stow -t $HOME */
+```
+
+to remove the symlinks use:
+
+```bash
+stow -t $HOME -D */
+```
+
+## Dependencies
+
+- zsh
+- ripgrep
+- fzf
+- jump
+- direnv
