@@ -4,11 +4,12 @@ lvim.plugins = {
 
   -- colorschemas
   { "tiagovla/tokyodark.nvim" },
-  -- { "folke/tokyonight.nvim" },
+  { "folke/tokyonight.nvim" },
   { "marko-cerovac/material.nvim" },
   { "navarasu/onedark.nvim" },
   { "lunarvim/synthwave84.nvim" },
-  -- { "catppuccin/nvim", as = "catppuccin" },
+  { "projekt0n/github-nvim-theme", version = "v0.0.7" },
+  { "catppuccin/nvim", name = "catppuccin" },
   -- {
   --   "fgheng/winbar.nvim",
   --   config = function()
@@ -26,7 +27,7 @@ lvim.plugins = {
   {
     "ruifm/gitlinker.nvim",
     -- event = "BufRead",
-    requires = "nvim-lua/plenary.nvim",
+    dependencies = "nvim-lua/plenary.nvim",
     -- config = function()
     --   require("user.gitlinker").config()
     -- end,

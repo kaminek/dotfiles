@@ -1,3 +1,7 @@
+-- disable automatic installation of servers
+lvim.lsp.installer.setup.automatic_installation = false
+-- check mason-tool-installer plugin
+
 -- Configure formatters and linters manually
 local linters = require "lvim.lsp.null-ls.linters"
 local formatters = require "lvim.lsp.null-ls.formatters"
@@ -60,6 +64,12 @@ local linters_table = {
       "markdown",
     },
   },
+  {
+    exe = "tfsec",
+    filetypes = {
+      "terraform",
+    },
+  },
 }
 
 local formatters_table = {
@@ -114,6 +124,12 @@ local formatters_table = {
     exe = "jq",
     filetypes = {
       "json",
+    },
+  },
+  {
+    exe = "terraform_fmt",
+    filetypes = {
+      "terraform",
     },
   },
 }

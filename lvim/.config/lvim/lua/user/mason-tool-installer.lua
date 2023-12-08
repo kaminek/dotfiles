@@ -45,6 +45,7 @@ M.config = function()
       "taplo",
       -- TF
       "terraform-ls",
+      "tfsec",
       -- Rust
       "rust-analyzer",
     },
