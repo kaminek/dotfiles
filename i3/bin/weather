@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+
+"""Get current weather condition and forecast for Polybar."""
+
+import requests
+import logging
+import argparse
+import sys
+import os
+import subprocess
+import time
+from systemd import journal
+
+logger = logging.getLogger("weather")
+
+
+def get_location():
+    """Return current location as latitude/longitude tuple."""
+    logger.debug("query MaxMind for location")
+    r = requests.get(
+        "https://geoip.maxmind.com/geoip/v2.1/city/me",
+        headers={"referer": "https://www.maxmind.com/en/locate-my-ip-address"},
+        timeout=10,
+    )
+    r.raise_for_status()
+    data = r.json()
+    logger.debug("current location data: %s", data)
+    location = (data.get("city") or data["country"])["names"]["en"]
+    logger.info(f"current location: {location}")
+    return ((data["location"]["latitude"], data["location"]["longitude"]), location)
+
+
+def get_weather(latitude, longitude):
+    """Return data from met.no."""
+    logger.debug("query met.no for %s, %s", latitude, longitude)
+    r = requests.get(
+        "https://api.met.no/weatherapi/locationforecast/2.0/complete.json",
+        params={
+            "lat": f"{latitude:.4f}",
+            "lon": f"{longitude:.4f}",
+        },
+        headers={
+            "user-agent": "WeatherWidget https://github.com/vincentbernat/i3wm-configuration"
+        },
+        timeout=10,
+    )
+    r.raise_for_status()
+    data = r.json()
+    logger.debug("weather data: %s", data)
+    return data
+
+
+def format_icon(symbol_code):
+    """Translate met.no icon to Font Awesome."""
+    # See https://github.com/metno/weathericons/blob/main/weather/legend.csv
+    symbol_code = symbol_code.removeprefix("light")
+    symbol_code = symbol_code.removeprefix("heavy")
+    if symbol_code.startswith("ss"):
+        symbol_code = symbol_code[1:]
+    icon = {
+        "clearsky_day": "\uf00d",
+        "clearsky_night": "\uf02e",
+        "cloudy": "\uf013",
+        "fair_day": "\uf002",
+        "fair_night": "\uf086",
+        "fog": "\uf014",
+        "partlycloudy_day": "\uf002",
+        "partlycloudy_night": "\uf086",
+        "rain": "\uf019",
+        "rainandthunder": "\uf01e",
+        "rainshowers_day": "\uf009",
+        "rainshowers_night": "\uf037",
+        "rainshowersandthunder_day": "\uf010",
+        "rainshowersandthunder_night": "\uf03b",
+        "sleet": "\uf0b5",
+        "sleetandthunder": "\uf01d",
+        "sleetshowers_day": "\uf0b2",
+        "sleetshowers_night": "\uf0b3",
+        "sleetshowersandthunder_day": "\uf068",
+        "sleetshowersandthunder_night": "\uf069",
+        "snow": "\uf01b",
+        "snowandthunder": "\uf06b",
+        "snowshowers_day": "\uf009",
+        "snowshowers_night": "\uf038",
+        "snowshowersandthunder_day": "\uf06b",
+        "snowshowersandthunder_night": "\uf06c",
+    }.get(symbol_code, "?")
+    logger.debug("symbol %s translated to %s (\\u%04x)", symbol_code, icon, ord(icon))
+    output = ["%{Tx}", icon, "%{T-}"]
+    return "".join(output)
+
+
+def update_status(status, output):
+    """Update current status."""
+    # Write it to file
+    with open(output, "w") as f:
+        f.write(status)
+
+    # Send it to polybar
+    subprocess.run(["polybar-msg", "action", f"#weather.send.{status}"])
+
+
+if __name__ == "__main__":
+    # Parse
+    description = sys.modules[__name__].__doc__
+    parser = argparse.ArgumentParser(description=description)
+    parser.add_argument(
+        "--debug",
+        "-d",
+        action="store_true",
+        default=False,
+        help="enable debugging",
+    )
+    parser.add_argument(
+        "--font-index", default=4, type=int, help="Polybar font 1-index"
+    )
+    parser.add_argument(
+        "--output",
+        default=f"{os.environ['XDG_RUNTIME_DIR']}/i3/weather.txt",
+        help="Output destination",
+    )
+    parser.add_argument(
+        "--online-timeout",
+        default=30,
+        type=int,
+        help="Wait up to TIMEOUT minutes to be online",
+    )
+    options = parser.parse_args()
+
+    # Logging
+    root = logging.getLogger("")
+    root.setLevel(logging.WARNING)
+    logger.setLevel(options.debug and logging.DEBUG or logging.INFO)
+    if sys.stderr.isatty():
+        ch = logging.StreamHandler()
+        ch.setFormatter(logging.Formatter("%(levelname)s: %(message)s"))
+        root.addHandler(ch)
+    else:
+        root.addHandler(journal.JournalHandler(SYSLOG_IDENTIFIER=logger.name))
+
+    try:
+        # Get location
+        while True:
+            try:
+                location, city = get_location()
+                break
+            except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
+                # Wait to be online
+                logger.info("not online, waiting")
+                update_status("", options.output)
+                time.sleep(5)
+                process = subprocess.run(
+                    ["nm-online", "-q", "-t", str(options.online_timeout * 60)]
+                )
+                if process.returncode != 0:
+                    logger.warning("not online, exiting")
+                    sys.exit(1)
+
+        # Grab current weather and daily forecast
+        weather = get_weather(*location)
+        weather = weather["properties"]["timeseries"]
+
+        # Compute min/max temperatures for the forecast. We use the next 24
+        # hours. So we use 18 entries.
+        mintemp = min(
+            d["data"]["next_6_hours"]["details"]["air_temperature_min"]
+            for d in weather[:18]
+        )
+        maxtemp = max(
+            d["data"]["next_6_hours"]["details"]["air_temperature_max"]
+            for d in weather[:18]
+        )
+
+        # Format output
+        conditions = [
+            # Current conditions: use the symbol for the next hour and the
+            # instant temperature
+            format_icon(weather[0]["data"]["next_1_hours"]["summary"]["symbol_code"]),
+            "{}°C".format(
+                round(weather[0]["data"]["instant"]["details"]["air_temperature"])
+            ),
+            # Forecast: use the symbol for the next 6 hours and the period after
+            format_icon(weather[0]["data"]["next_6_hours"]["summary"]["symbol_code"])
+            + format_icon(weather[6]["data"]["next_6_hours"]["summary"]["symbol_code"]),
+            # And the temperature range computed for the next 24 hours
+            "{}—{}°C".format(round(mintemp), round(maxtemp)),
+        ]
+        city = city.replace("%", "%%")
+        conditions.insert(0, f"%{{F#888}}{city}%{{F-}}")
+        output = " ".join(conditions).replace("%{Tx}", "%%{T%d}" % options.font_index)
+        logger.debug("output: %s", output)
+
+        update_status(output, options.output)
+
+    except Exception as e:
+        logger.exception("%s", e)
+        sys.exit(1)
+    sys.exit(0)

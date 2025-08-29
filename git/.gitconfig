@@ -21,6 +21,8 @@
 [includeIf "gitdir:~/work/pro/"]
         path = ~/work/pro/.gitconfig
 
+[include]
+	path = ~/.config/gitconfig/catppuccin.gitconfig
 
 [sendemail]
         smtpuser = kaminek92@gmail.com
@@ -99,7 +101,7 @@
     diffFilter = delta --color-only
 
 [delta]
-    features = decorations line-numbers
+    features = decorations line-numbers catppuccin-latte
     whitespace-error-style = 22 reverse
     syntax-theme = Monokai Extended
     ; syntax-theme = Dracula
@@ -228,7 +230,7 @@
         rebase = true
 
 [push]
-        default = nothing
+	default = current
 
 [url "git@github.com:"]
     insteadOf = https://github.com/

@@ -1,0 +1,37 @@
+
+[window]
+opacity = 1
+blur = true
+dynamic_padding = true
+padding = { x = 3, y = 3 }
+decorations = "None"
+
+[env]
+TERM = "xterm-256color"
+COLORTERM= "truecolor"
+
+[font]
+size = 10
+
+[font.bold]
+family = "Iosevka Nerd Font"
+
+[font.bold_italic]
+family = "Iosevka Nerd Font"
+
+[font.italic]
+family = "Iosevka Nerd Font"
+
+[font.normal]
+family = "Iosevka Nerd Font"
+
+[general]
+
+live_config_reload = true
+
+import = [
+  "~/.config/alacritty/catppuccin-latte.toml"
+  # "~/.config/alacritty/catppuccin-frappe.toml"
+  # "~/.config/alacritty/catppuccin-macchiato.toml"
+  # "~/.config/alacritty/catppuccin-mocha.toml"
+]

@@ -1,6 +1,0 @@
-# vim:ft=zsh
-
-### sshc
-# Colored ssh using colorize your terminal ChromaTerm--
-
-[[ -x ct ]] && $(which ssh) $* | ct

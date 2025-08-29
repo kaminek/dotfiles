@@ -1,0 +1,64 @@
+#!/bin/bash
+
+me="$(readlink -f "$0")"
+timeout=300
+notify=$((timeout/10))
+
+configure() {
+    xset s $((timeout - notify)) $notify
+    xset dpms $((timeout * 3)) $((timeout * 32 / 10)) $((timeout * 34 / 10))
+}
+dimmer() {
+    systemctl --user --no-block $1 xss-dimmer@$notify.service
+}
+
+case "$1" in
+    start)
+        configure
+        exec xss-lock --session=${XDG_SESSION_ID} --notifier="$me notify" --transfer-sleep-lock "$me" lock
+        ;;
+    dim|notify)
+        echo "notify: start (idle: $(xprintidle))"
+        trap 'echo notify: user activity; dimmer stop; kill %% 2> /dev/null; exit 0' HUP  # user activity
+        trap 'echo notify: locker started; kill %% 2> /dev/null; exit 0' TERM # locker started
+        dimmer start
+        sleep infinity &
+        wait
+        echo "notify: end"
+        ;;
+    lock)
+        echo "lock: lock screen (idle: $(xprintidle))"
+        # Something may have meddled with screensaver settings
+        configure
+        # Pause music player and notifications
+        playerctl -a pause
+        dunstctl_state=$(dunstctl is-paused)
+        dunstctl set-paused true
+        # Then, lock screen
+        env XSECURELOCK_SAVER=$HOME/.config/i3/bin/xsecurelock-saver \
+            `# Disable RandR 1.5 support to make screensaver spans accross the whole monitor` \
+            XSECURELOCK_NO_XRANDR15=1 \
+            `# Disable RandR when we know we have a single monitor` \
+            XSECURELOCK_NO_XRANDR=$($(grep -qFwx 1 $XDG_RUNTIME_DIR/i3/outputs.txt 2> /dev/null) && echo 1 || echo 0) \
+            `# Delay mapping saver window by 500ms to give some time to saver to start` \
+            XSECURELOCK_SAVER_DELAY_MS=500 \
+            `# Do not kill screensaver when DPMS is enabled` \
+            XSECURELOCK_SAVER_STOP_ON_BLANK=0 \
+            `# Do not mess with DPMS settings` \
+            XSECURELOCK_BLANK_TIMEOUT=-1 \
+            `# Image and text for saver` \
+            XSECURELOCK_SAVER_IMAGE=$XDG_RUNTIME_DIR/i3/current-wallpaper.png \
+            XSECURELOCK_SAVER_WEATHER=$XDG_RUNTIME_DIR/i3/weather.txt \
+            `# Font for authentication window` \
+            XSECURELOCK_FONT="Iosevka Term SS18" \
+            `# Timeout for authentication window` \
+            XSECURELOCK_AUTH_TIMEOUT=10 \
+            xsecurelock
+        echo "lock: unlock screen"
+        # After unlocking screen, stop dimmer, restore notifications
+        dimmer stop
+        dunstctl set-paused ${dunstctl_state}
+        # Hack around an issue with brightness
+        [[ "$(uname -n)" != "wally" ]] || brightnessctl -q set $(brightnessctl get)
+        ;;
+esac

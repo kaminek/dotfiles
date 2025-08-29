@@ -1,8 +1,0 @@
-# vim:ft=zsh
-
-aws_profile="infra-dev"
-token=$(aws sts assume-role --role-arn arn:aws:iam::170784760884:role/OrganizationAccountAccessRole --role-session-name $aws_profile --profile amine.kherbouche.mfa)
-
-aws configure set aws_access_key_id "$(echo "$token" | jq -r .Credentials.AccessKeyId)" --profile $aws_profile
-aws configure set aws_secret_access_key "$(echo "$token" | jq -r .Credentials.SecretAccessKey)" --profile $aws_profile
-aws configure set aws_session_token "$(echo "$token" | jq -r .Credentials.SessionToken)" --profile $aws_profile

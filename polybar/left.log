@@ -1,0 +1,11 @@
+polybar|warn:  Naming your configuration file 'config' is deprecated, the expected name is 'config.ini'.
+polybar|notice:  Parsing config file: /home/kaminek/.config/polybar/config
+polybar|warn:  No monitor specified, using "eDP-1-1"
+polybar|notice:  Loading module 'i3' of type 'internal/i3'
+polybar|notice:  Loaded 1 modules
+polybar|notice:  Loaded font "Fira Code:style=Regular:size=11" (name=CaskaydiaCove Nerd Font Mono, offset=3, file=/home/kaminek/.local/share/fonts/CascadiaCove/Caskaydia Cove Nerd Font Complete Mono Regular.otf)
+polybar|notice:  Loaded font "Font Awesome 5 Brands Regular:style=Regular:size=11" (name=CaskaydiaCove Nerd Font Mono, offset=3, file=/home/kaminek/.local/share/fonts/CascadiaCove/Caskaydia Cove Nerd Font Complete Mono Regular.otf)
+polybar|notice:  Loaded font "Font Awesome 5 Free Solid:style=Solid:size=11" (name=CaskaydiaCove Nerd Font Mono, offset=3, file=/home/kaminek/.local/share/fonts/CascadiaCove/Caskaydia Cove Nerd Font Complete Mono Regular.otf)
+polybar|notice:  Loaded font "Font Awesome 5 Free Regular:style=Regular:size=11" (name=CaskaydiaCove Nerd Font Mono, offset=3, file=/home/kaminek/.local/share/fonts/CascadiaCove/Caskaydia Cove Nerd Font Complete Mono Regular.otf)
+polybar|warn:  module/i3: Attempting to reconnect socket (reason: Unexpected EOF while reading header)
+polybar|error: module/i3: Failed to reconnect socket (reason: Failed to read header from socket 0xd: errno 104 (Connection reset by peer))

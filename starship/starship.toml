@@ -1,0 +1,59 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Don't print a new line at the start of the prompt
+add_newline = false
+
+[line_break]
+disabled = false
+
+[character]      # The name of the module we are configuring is "character"
+error_symbol = "✗"
+
+[time]
+disabled = true
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$docker_context\
+$cmake\
+$golang\
+$helm\
+$python\
+$ruby\
+$rust\
+$terraform\
+$vagrant\
+$nix_shell\
+$conda\
+$aws\
+$gcloud\
+$kubernetes\
+$env_var\
+$custom\
+$lua\
+$jobs\
+$status\
+$line_break\
+$character
+"""
+
+[aws.region_aliases]
+eu-west-1 = 'euw1'
+us-east-1 = 'use1'
+ap-northeast-1 = 'apne1'
+
+[kubernetes]
+disabled = true
+
+# [package]
+# disabled = true
+
+[nodejs]
+disabled = true
