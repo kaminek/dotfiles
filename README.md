@@ -1,4 +1,4 @@
-# dotfiles
+# Dotfiles
 
 My Personal Dotfiles
 
@@ -7,19 +7,14 @@ My Personal Dotfiles
 Dotfiles are managed by `stow`, to install the symlinks clone this repo and do:
 
 ```bash
-stow -t $HOME */
+stow .
 ```
 
 to remove the symlinks use:
 
 ```bash
-stow -t $HOME -D */
+stow -D .
 ```
 
 ## Dependencies
-
-- zsh
-- ripgrep
-- fzf
-- jump
-- direnv
+<!-- TODO -->
