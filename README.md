@@ -18,3 +18,4 @@ stow -D .
 
 ## Dependencies
 <!-- TODO -->
+* install zplug

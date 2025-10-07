@@ -22,7 +22,7 @@
         path = ~/work/pro/.gitconfig
 
 [include]
-	path = ~/.config/gitconfig/catppuccin.gitconfig
+	path = ~/.config/git/catppuccin.gitconfig
 
 [sendemail]
         smtpuser = kaminek92@gmail.com
@@ -103,8 +103,7 @@
 [delta]
     features = decorations line-numbers catppuccin-latte
     whitespace-error-style = 22 reverse
-    syntax-theme = Monokai Extended
-    ; syntax-theme = Dracula
+    syntax-theme = catppuccin-latte
     plus-style = syntax "#003800"
     minus-style = syntax "#3f0001"
 

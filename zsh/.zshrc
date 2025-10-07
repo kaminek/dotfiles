@@ -86,9 +86,6 @@ export LANG=en_US.UTF-8
 export LOCAL_PATH=$HOME/.local/bin
 _prepend_to_path $LOCAL_PATH
 
-# misc bin path
-_prepend_to_path /usr/local/sbin
-
 # Cargo bin path
 _prepend_to_path $HOME/.cargo/bin
 
@@ -190,9 +187,8 @@ bindkey -e
 #==============================================================================
 
 # zplug
-if _is Linux; then
-  source /usr/share/zsh/scripts/zplug/init.zsh
-fi
+export ZPLUG_HOME=/opt/homebrew/opt/zplug
+source $ZPLUG_HOME/init.zsh
 
 zplug zsh-users/zsh-autosuggestions
 zplug zsh-users/zsh-completions
@@ -335,13 +331,5 @@ eval "$(zoxide init zsh)"
 
 [[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
-eval "$(direnv hook zsh)"
-
 # Starship prompt
 eval "$(starship init zsh)"
-
-# Task Master aliases added on 6/24/2025
-alias tm='task-master'
-alias taskmaster='task-master'
-
-alias claude="/home/kaminek/.claude/local/claude"
