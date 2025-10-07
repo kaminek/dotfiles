@@ -1,3 +1,8 @@
 .vim/bundle
 lvim/.config/lvim/plugin/packer_compiled.lua
 tmux/plugins
+zsh/.zcompdump
+
+# Claude Code files
+.claude/
+CLAUDE.md
