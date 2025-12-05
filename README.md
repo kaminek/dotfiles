@@ -15,7 +15,3 @@ to remove the symlinks use:
 ```bash
 stow -D .
 ```
-
-## Dependencies
-<!-- TODO -->
-* install zplug
