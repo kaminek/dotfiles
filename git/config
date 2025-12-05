@@ -103,7 +103,7 @@
 [delta]
     features = decorations line-numbers catppuccin-latte
     whitespace-error-style = 22 reverse
-    syntax-theme = catppuccin-latte
+    syntax-theme = Catppuccin Latte
     plus-style = syntax "#003800"
     minus-style = syntax "#3f0001"
 
