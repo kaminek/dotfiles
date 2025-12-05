@@ -101,6 +101,11 @@ export AWS_VAULT_BACKEND=secret-service
 export AWS_VAULT_PROMPT=ykman
 
 export EDITOR=nvim
+
+# k9s
+export K9S_CONFIG_DIR=~/.config/k9s
+export K9S_EDITOR=nvim
+
 #==============================================================================
 #       Configuration
 #==============================================================================
@@ -288,9 +293,9 @@ fi
 
 # certs bundle
 if _is Darwin; then
-  export CURL_CA_BUNDLE=/usr/local/etc/ca-certificates/cert.pem
-  export REQUESTS_CA_BUNDLE=/usr/local/etc/ca-certificates/cert.pem
-  export SSL_CERT_FILE=/usr/local/etc/ca-certificates/cert.pem
+  export CURL_CA_BUNDLE=/etc/ssl/cert.pem
+  export REQUESTS_CA_BUNDLE=/etc/ssl/cert.pem
+  export SSL_CERT_FILE=/etc/ssl/cert.pem
 elif _is Linux; then
   export CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
   export REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
@@ -330,6 +335,10 @@ fi
 eval "$(zoxide init zsh)"
 
 [[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(direnv hook zsh)"
 
 # Starship prompt
 eval "$(starship init zsh)"
