@@ -82,25 +82,12 @@ _append_to_path $GOBIN
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# local home bin path
-export LOCAL_PATH=$HOME/.local/bin
-_prepend_to_path $LOCAL_PATH
-
-# Cargo bin path
-_prepend_to_path $HOME/.cargo/bin
-
 export TERMINAL="alacritty"
 export VISUAL="gvim"
 export EDITOR="nvim"
 
 export GPG_KEYID=0x239BDC0C10526EC6
 export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
-
-# aws-vault
-export AWS_VAULT_BACKEND=secret-service
-export AWS_VAULT_PROMPT=ykman
-
-export EDITOR=nvim
 
 # k9s
 export K9S_CONFIG_DIR=~/.config/k9s
@@ -160,24 +147,27 @@ function gpg_restart {
   eval $(gpg-agent --daemon --enable-ssh-support)
 }
 
-function nvims() {
-  items=("default" "kickstart" "LazyVim")
-  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=~50% --layout=reverse --border --exit-0)
-  if [[ -z $config ]]; then
-    echo "Nothing selected"
-    return 0
-  elif [[ $config == "default" ]]; then
-    config=""
-  fi
-  NVIM_APPNAME=$config nvim $@
-}
-
 #==============================================================================
 #       Extra Custom PATH
 #==============================================================================
 
 # local bins
 _prepend_to_path $HOME/.bin
+
+# local home bin path
+export LOCAL_PATH=$HOME/.local/bin
+_prepend_to_path $LOCAL_PATH
+
+# Cargo bin path
+_prepend_to_path $HOME/.cargo/bin
+
+if _has kubectl; then
+  source <(kubectl completion zsh)
+  _prepend_to_path $HOME/.krew/bin
+fi
+
+# Bun bin path
+_prepend_to_path $HOME/.bun/bin
 
 #==============================================================================
 #       Key bindings
@@ -236,18 +226,12 @@ man() {
 # Aliases
 [[ -f $HOME/.config/zsh/.aliases ]] && source $HOME/.config/zsh/.aliases
 
-# FZF
-if _is Darwin; then
-  [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-elif _is Linux; then
-  [ -f /usr/share/fzf/key-bindings.zsh ] && source /usr/share/fzf/key-bindings.zsh
-  [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
-fi
-
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 # Custom FZF cmd
 # User ripgrep as search for fzf
 if _has fzf && _has fd; then
-  export FZF_COMPLETION_TRIGGER='~~'
+  export FZF_COMPLETION_TRIGGER='**'
   export FZF_COMPLETION_OPTS='--border --info=inline'
   #export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs --hidden'
   export FZF_DEFAULT_COMMAND='fd --type f --strip-cwd-prefix'
@@ -256,6 +240,8 @@ if _has fzf && _has fd; then
   --color fg:252,bg:233,hl:67,fg+:252,bg+:235,hl+:81
   --color info:144,prompt:161,spinner:135,pointer:135,marker:118
   '
+  # disable history (managed by atuin)
+  export FZF_CTRL_R_COMMAND=""
   # - The first argument to the function ($1) is the base path to start traversal
   _fzf_compgen_path() {
     fd --hidden --follow --exclude ".git" . "$1"
@@ -313,11 +299,6 @@ fi
 # Call upon launch if not in tmux
 ! [[ -n $TMUX ]] && fastfetch
 
-if _has kubectl; then
-  source <(kubectl completion zsh)
-  _prepend_to_path $HOME/.krew/bin
-fi
-
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
@@ -337,7 +318,7 @@ eval "$(zoxide init zsh)"
 [[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
+eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 
 # Starship prompt
