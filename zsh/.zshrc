@@ -320,6 +320,6 @@ eval "$(zoxide init zsh)"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
-
+eval "$(mise activate zsh)"
 # Starship prompt
 eval "$(starship init zsh)"
