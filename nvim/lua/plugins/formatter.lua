@@ -6,13 +6,13 @@ return {
   opts = {
     -- Map of filetype to formatters
     formatters_by_ft = {
-      json = { "dprint", { "prettierd", "prettier" } },
-      jsonc = { "dprint", { "prettierd", "prettier" } },
+      json = { "dprint", "prettierd", "prettier", stop_after_first = true },
+      jsonc = { "dprint", "prettierd", "prettier", stop_after_first = true },
       markdown = { "dprint" },
       sql = { "dprint" },
       toml = { "dprint" },
       yaml = { "dprint" },
-      python = { "isort", "black", "ruff_format" },
+      -- python config moved to plugins/extras/lang/python.lua
     },
     -- Custom formatters and changes to built-in formatters
     formatters = {

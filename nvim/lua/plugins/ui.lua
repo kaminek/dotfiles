@@ -1,6 +1,18 @@
 return {
-  -- use mini.starter instead of alpha
-  -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
+  -- Show full file path in statusline (keep LazyVim defaults)
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = function(_, opts)
+      -- Find and update the filename component in lualine_c
+      for i, component in ipairs(opts.sections.lualine_c) do
+        if type(component) == "table" and component[1] == "filename" then
+          component.path = 1 -- 0=filename, 1=relative, 2=absolute, 3=absolute with ~
+          break
+        end
+      end
+      return opts
+    end,
+  },
 
   -- Enable bufferline explicitly
   {

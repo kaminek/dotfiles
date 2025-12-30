@@ -2,12 +2,12 @@ return {
   {
     "mistricky/codesnap.nvim",
     build = "make build_generator",
-    event = "VeryLazy",
+    -- Only load on keypress to avoid cpath conflict with blink.cmp
     keys = {
       { "<leader>cs", "<Esc><cmd>CodeSnap<cr>", mode = "x", desc = "Save selected code snapshot into clipboard" },
       { "<leader>cS", "<Esc><cmd>CodeSnapSave<cr>", mode = "x", desc = "Save selected code snapshot in ~/Pictures/" },
     },
-    lazy = true,
+    cmd = { "CodeSnap", "CodeSnapSave" },
     opts = {
       mac_window_bar = false,
       save_path = "~/Pictures/",

@@ -17,4 +17,7 @@ return {
       -- },
     },
   },
+
+  -- Import extra lsp languages configs
+  { import = "plugins.extras.lang" },
 }
