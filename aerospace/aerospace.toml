@@ -7,10 +7,26 @@
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
+start-at-login = true
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+after-login-command = []
+after-startup-command = []
+exec-on-workspace-change = []
+on-focus-changed = ['move-mouse window-lazy-center']
+accordion-padding = 5
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+automatically-unhide-macos-hidden-apps = false
+key-mapping.preset = 'qwerty'
 
-start-at-login = true
+[gaps]
+inner.horizontal = 10
+inner.vertical = 10
+outer.left = 5
+outer.bottom = 5
+outer.top = 5
+outer.right = 5
 
 [mode.main.binding]
 
@@ -26,10 +42,10 @@ start-at-login = true
     '''
 
     # i3 wraps focus by default
-    alt-j =         'focus --boundaries-action wrap-around-the-workspace left'
-    alt-k =         'focus --boundaries-action wrap-around-the-workspace down'
-    alt-l =         'focus --boundaries-action wrap-around-the-workspace up'
-    alt-semicolon = 'focus --boundaries-action wrap-around-the-workspace right'
+    alt-k = 'focus --boundaries-action wrap-around-the-workspace up'
+    alt-j = 'focus --boundaries-action wrap-around-the-workspace down'
+    alt-l = 'focus --boundaries-action wrap-around-the-workspace left'
+    alt-h = 'focus --boundaries-action wrap-around-the-workspace right'
 
     alt-shift-j = 'move left'
     alt-shift-k = 'move down'
@@ -38,7 +54,7 @@ start-at-login = true
 
     # Consider using 'join-with' command as a 'split' replacement if you want to enable
     # normalizations
-    alt-h = 'split horizontal'
+    # alt-h = 'split horizontal'
     alt-v = 'split vertical'
 
     alt-f = 'fullscreen'
