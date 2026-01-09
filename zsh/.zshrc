@@ -302,8 +302,13 @@ fi
 autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
-# XXX:completion for k alias?
-#compdef __start_kubectl k
+# eza alias completions
+for cmd in ls lt la l ll; do
+  compdef $cmd=eza
+done
+
+# kubectl alias completion
+compdef k=kubectl
 
 if _has terraform; then
   complete -o nospace -C /usr/bin/terraform terraform
