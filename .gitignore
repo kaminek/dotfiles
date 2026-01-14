@@ -6,3 +6,4 @@ zsh/.zcompdump*
 # Claude Code files
 .claude/
 CLAUDE.md
+nvim/lazy-lock.json
