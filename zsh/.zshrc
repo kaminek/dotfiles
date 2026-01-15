@@ -93,6 +93,8 @@ export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 export K9S_CONFIG_DIR=~/.config/k9s
 export K9S_EDITOR=nvim
 
+export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
+
 #==============================================================================
 #       Configuration
 #==============================================================================

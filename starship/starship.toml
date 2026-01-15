@@ -4,15 +4,6 @@
 # Don't print a new line at the start of the prompt
 add_newline = false
 
-[line_break]
-disabled = false
-
-[character]      # The name of the module we are configuring is "character"
-error_symbol = "✗"
-
-[time]
-disabled = true
-
 format = """
 $username\
 $hostname\
@@ -34,16 +25,25 @@ $nix_shell\
 $conda\
 $aws\
 $gcloud\
-$kubernetes\
 $mise\
 $env_var\
 $custom\
 $lua\
 $jobs\
 $status\
+$kubernetes\
 $line_break\
 $character
 """
+
+[line_break]
+disabled = false
+
+[character]
+error_symbol = "✗"
+
+[time]
+disabled = true
 
 [aws.region_aliases]
 eu-west-1 = 'euw1'
@@ -51,7 +51,11 @@ us-east-1 = 'use1'
 ap-northeast-1 = 'apne1'
 
 [kubernetes]
-disabled = true
+disabled = false
+format = '[☸ $context]($style) '
+detect_files = []
+detect_folders = []
+detect_extensions = []
 
 # [package]
 # disabled = true
