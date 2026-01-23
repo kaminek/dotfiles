@@ -324,9 +324,10 @@ eval "$(zoxide init zsh)"
 
 [[ -f $HOME/.cargo/env ]] && source "$HOME/.cargo/env"
 
+# Shell integrations
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(mise activate zsh)"
-# Starship prompt
 eval "$(starship init zsh)"
