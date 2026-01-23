@@ -95,6 +95,9 @@ export K9S_EDITOR=nvim
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
+# gcloud sdk
+_append_to_path /opt/homebrew/share/google-cloud-sdk/bin
+
 #==============================================================================
 #       Configuration
 #==============================================================================
@@ -326,7 +329,6 @@ eval "$(zoxide init zsh)"
 
 # Shell integrations
 eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="/opt/homebrew/share/google-cloud-sdk/bin:$PATH"
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(mise activate zsh)"
