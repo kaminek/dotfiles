@@ -82,8 +82,8 @@ _append_to_path $GOBIN
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-export TERMINAL="alacritty"
-export VISUAL="gvim"
+export TERMINAL="ghostty"
+export VISUAL="neovide"
 export EDITOR="nvim"
 
 export GPG_KEYID=0x239BDC0C10526EC6
