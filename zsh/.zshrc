@@ -132,7 +132,7 @@ setopt nonomatch
 if [ -d $HOME/.config/zsh/.zfuncs ]; then
   fpath=($HOME/.config/zsh/.zfuncs $fpath)
   # Load custom function/cmd
-  autoload -Uz kp sshc
+  autoload -Uz kp sshc _eza
 fi
 
 SSH_ENV="$HOME/.ssh/agent-environment"
@@ -308,9 +308,8 @@ autoload -Uz compinit && compinit
 autoload -U +X bashcompinit && bashcompinit
 
 # eza alias completions
-for cmd in ls lt la l ll; do
-  compdef $cmd=eza
-done
+compdef _eza eza
+compdef _files ll ls lt la l
 
 # kubectl alias completion
 compdef k=kubectl
@@ -333,3 +332,5 @@ eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
+
+. "$HOME/.moon/bin/env"
