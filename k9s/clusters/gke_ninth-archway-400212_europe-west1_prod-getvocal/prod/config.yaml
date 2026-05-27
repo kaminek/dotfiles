@@ -1,0 +1,21 @@
+k9s:
+  cluster: gke_ninth-archway-400212_europe-west1_prod-getvocal
+  skin: red
+  namespace:
+    active: radarbot
+    lockFavorites: false
+    favorites:
+      - observability
+      - monitoring
+      - all
+      - embeddings
+      - production
+      - radarbot
+      - redpanda-system
+      - vpn
+      - networking
+  view:
+    active: ctx
+  featureGates:
+    nodeShell: false
+  proxy: null

@@ -1,0 +1,15 @@
+k9s:
+  cluster: gke_ninth-archway-400212_us-west1-a_getvocal
+  namespace:
+    active: argo-cd
+    lockFavorites: false
+    favorites:
+      - monitoring
+      - argo-cd
+      - all
+      - default
+  view:
+    active: ctx
+  featureGates:
+    nodeShell: false
+  proxy: null

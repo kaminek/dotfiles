@@ -1,0 +1,20 @@
+k9s:
+  cluster: gke_ninth-archway-400212_us-central1_pre-prod-getvocal
+  namespace:
+    active: radarbot
+    lockFavorites: false
+    favorites:
+      - radarbot
+      - all
+      - vpn
+      - observability
+      - pre-production
+      - monitoring
+      - load-test
+      - cnpg-system
+      - gke-managed-volumepopulator
+  view:
+    active: v1/pods
+  featureGates:
+    nodeShell: false
+  proxy: null

@@ -1,0 +1,13 @@
+k9s:
+  cluster: gke_ninth-archway-400212_us-central1_pre-prod-getvocal
+  namespace:
+    active: all
+    lockFavorites: false
+    favorites:
+      - all
+      - default
+  view:
+    active: po
+  featureGates:
+    nodeShell: false
+  proxy: null
