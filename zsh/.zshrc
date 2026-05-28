@@ -309,18 +309,30 @@ autoload -U +X bashcompinit && bashcompinit
 
 # eza alias completions
 compdef _eza eza
-compdef _files ll ls lt la l
+# carapace handles ls; keep _files for ll/lt/la/l aliases carapace doesn't know
+compdef _files ll lt la l
 
-# kubectl alias completion
+# carapace-sh — must come before alias bridges below so they win
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense' # optional
+zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+# carapace needs menu select for highlight/hover + descriptions in popup
+zstyle ':completion:*' menu select
+zstyle ':completion:*' completer _complete
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*:git-*:*' verbose yes
+source <(carapace _carapace)
+
+# kubectl alias completion — after carapace so it takes precedence for `k`
 compdef k=kubectl
 
-if _has terraform; then
-  complete -o nospace -C /usr/bin/terraform terraform
-fi
-
-if _has aws; then
-  complete -C '/sbin/aws_completer' aws
-fi
+# terraform/aws now handled by carapace; disable bash compspec overrides
+# if _has terraform; then
+#   complete -o nospace -C /usr/bin/terraform terraform
+# fi
+#
+# if _has aws; then
+#   complete -C '/sbin/aws_completer' aws
+# fi
 
 eval "$(zoxide init zsh)"
 
