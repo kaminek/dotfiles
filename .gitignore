@@ -7,3 +7,7 @@ zsh/.zcompdump*
 .claude/
 CLAUDE.md
 nvim/lazy-lock.json
+
+# k9s cluster configs — contain sensitive cluster names/paths
+k9s/clusters/
+k9s/screen-dumps/
