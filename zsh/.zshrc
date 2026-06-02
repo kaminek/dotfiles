@@ -174,6 +174,9 @@ fi
 # Bun bin path
 _prepend_to_path $HOME/.bun/bin
 
+# nvim mason tool bins (pyrefly, ruff, ...) — also used by Claude Code LSP
+_prepend_to_path $HOME/.local/share/nvim/mason/bin
+
 #==============================================================================
 #       Key bindings
 #==============================================================================
@@ -346,3 +349,6 @@ eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
 
 . "$HOME/.moon/bin/env"
+
+# OrbStack CLI integration
+[[ -f "$HOME/.orbstack/shell/init.zsh" ]] && source "$HOME/.orbstack/shell/init.zsh"
