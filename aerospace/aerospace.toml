@@ -11,7 +11,14 @@ start-at-login = true
 # Mouse follows focus when focused monitor changes
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 after-login-command = []
-after-startup-command = []
+# Launch home apps on startup; on-window-detected rules place them in workspaces 1-4
+after-startup-command = [
+  'exec-and-forget open -b com.google.Chrome',
+  'exec-and-forget open -b com.mitchellh.ghostty',
+  'exec-and-forget open -b com.tinyspeck.slackmacgap',
+  'exec-and-forget open -b com.anthropic.claudefordesktop',
+  'exec-and-forget open -b md.obsidian',
+]
 exec-on-workspace-change = []
 on-focus-changed = ['move-mouse window-lazy-center']
 accordion-padding = 5
@@ -102,3 +109,35 @@ alt-tab = 'workspace-back-and-forth'
 [[on-window-detected]]
 if.app-name-regex-substring = 'finder'
 run = 'layout floating'
+
+# Float Chrome popup windows (Bitwarden, PayPal, OAuth, etc.) instead of tiling.
+# Real tabs always carry a ' - Google Chrome - <profile>' suffix; popups don't,
+# so float any Chrome window whose title lacks 'google chrome'.
+# Must precede the generic Chrome rule; stop so it isn't moved to workspace 1.
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+if.window-title-regex-substring = '^(?!.*google chrome).*$'
+check-further-callbacks = false
+run = 'layout floating'
+
+# Assign apps to their home workspaces (placement only; AeroSpace can't persist
+# pane sizes or split geometry)
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = 'move-node-to-workspace 0'
