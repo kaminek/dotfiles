@@ -348,7 +348,5 @@ eval "$(direnv hook zsh)"
 eval "$(mise activate zsh)"
 eval "$(starship init zsh)"
 
-. "$HOME/.moon/bin/env"
-
 # OrbStack CLI integration
 [[ -f "$HOME/.orbstack/shell/init.zsh" ]] && source "$HOME/.orbstack/shell/init.zsh"
