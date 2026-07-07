@@ -52,3 +52,6 @@ alias  a='export AWS_REGION=ap-northeast-1'
 alias  sandbox='export AWS_PROFILE=sandbox'
 alias  infra-dev='export AWS_PROFILE=infra-dev'
 alias  prod-admin='export AWS_PROFILE=teads-prod-admin'
+
+# claude with second account config
+alias  cc='CLAUDE_CONFIG_DIR=$HOME/work/perso/claude claude --dangerously-skip-permissions'
