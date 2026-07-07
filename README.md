@@ -29,6 +29,13 @@ stow it separately:
 stow --target="$HOME" ssh
 ```
 
+After stowing, register the custom bat themes (per machine; delta/`git diff`
+warns about unknown themes otherwise):
+
+```bash
+bat cache --build
+```
+
 to remove the symlinks use:
 
 ```bash
