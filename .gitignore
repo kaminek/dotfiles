@@ -1,3 +1,4 @@
+.DS_Store
 .vim/bundle
 lvim/.config/lvim/plugin/packer_compiled.lua
 tmux/plugins
