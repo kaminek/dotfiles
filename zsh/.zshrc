@@ -307,7 +307,9 @@ fi
 # Call upon launch if not in tmux
 ! [[ -n $TMUX ]] && fastfetch
 
-autoload -Uz compinit && compinit
+autoload -Uz compinit
+# -d: persist the dump, else compinit rebuilds from 32 fpath dirs every shell (~1.6s)
+compinit -d "${XDG_CACHE_HOME:-$HOME/.cache}/zsh/zcompdump-${ZSH_VERSION}"
 autoload -U +X bashcompinit && bashcompinit
 
 # eza alias completions
@@ -350,3 +352,4 @@ eval "$(starship init zsh)"
 
 # OrbStack CLI integration
 [[ -f "$HOME/.orbstack/shell/init.zsh" ]] && source "$HOME/.orbstack/shell/init.zsh"
+
