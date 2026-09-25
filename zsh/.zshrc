@@ -167,7 +167,12 @@ _prepend_to_path $LOCAL_PATH
 _prepend_to_path $HOME/.cargo/bin
 
 if _has kubectl; then
-  source <(kubectl completion zsh)
+  # cache the completion (~240ms to generate); refresh when the binary changes
+  _kubectl_comp=$HOME/.config/zsh/.zfuncs/_kubectl
+  if [[ ! -f $_kubectl_comp || $commands[kubectl] -nt $_kubectl_comp ]]; then
+    kubectl completion zsh >| $_kubectl_comp
+  fi
+  unset _kubectl_comp
   _prepend_to_path $HOME/.krew/bin
 fi
 

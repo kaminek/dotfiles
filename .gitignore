@@ -12,3 +12,6 @@ nvim/lazy-lock.json
 # k9s cluster configs — contain sensitive cluster names/paths
 k9s/clusters/
 k9s/screen-dumps/
+
+# generated completion cache (see zsh/.zshrc kubectl block)
+zsh/.zfuncs/_kubectl
