@@ -1,57 +1,12 @@
 return {
-  -- Show full file path in statusline (keep LazyVim defaults)
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      -- Find and update the filename component in lualine_c
-      for i, component in ipairs(opts.sections.lualine_c) do
-        if type(component) == "table" and component[1] == "filename" then
-          component.path = 1 -- 0=filename, 1=relative, 2=absolute, 3=absolute with ~
-          break
-        end
-      end
-      return opts
-    end,
-  },
-
-  -- Enable bufferline explicitly
   {
     "akinsho/bufferline.nvim",
-    dependencies = "nvim-tree/nvim-web-devicons",
-    event = "VeryLazy",
-    keys = {
-      { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
-      { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
-      { "[b", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev buffer" },
-      { "]b", "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer" },
-      { "<leader>bp", "<Cmd>BufferLineTogglePin<CR>", desc = "Toggle pin" },
-      { "<leader>bo", "<Cmd>BufferLineCloseOthers<CR>", desc = "Delete other buffers" },
+    opts = {
+      options = {
+        always_show_bufferline = true,
+        separator_style = "thin",
+      },
     },
-    opts = function()
-      return {
-        options = {
-          close_command = "bdelete! %d",
-          right_mouse_command = "bdelete! %d",
-          diagnostics = "nvim_lsp",
-          always_show_bufferline = true,
-          diagnostics_indicator = function(_, _, diag)
-            local icons = { Error = "󰅚 ", Warn = "󰀪 " }
-            local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-              .. (diag.warning and icons.Warn .. diag.warning or "")
-            return vim.trim(ret)
-          end,
-          offsets = {
-            {
-              filetype = "neo-tree",
-              text = "File Explorer",
-              text_align = "center",
-              separator = true,
-            },
-          },
-          separator_style = "thin",
-        },
-      }
-    end,
   },
   {
     "akinsho/git-conflict.nvim",

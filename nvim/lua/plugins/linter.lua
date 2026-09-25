@@ -5,7 +5,6 @@ return {
     opts = {
       linters_by_ft = {
         lua = { "selene", "luacheck" },
-        go = { "golangcilint" },
       },
       linters = {
         selene = {
