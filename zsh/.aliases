@@ -54,4 +54,4 @@ alias  infra-dev='export AWS_PROFILE=infra-dev'
 alias  prod-admin='export AWS_PROFILE=teads-prod-admin'
 
 # claude with second account config
-alias  cc='CLAUDE_CONFIG_DIR=$HOME/work/perso/claude claude --dangerously-skip-permissions'
+alias  cc='CLAUDE_CONFIG_DIR=$HOME/work/perso/claude claude --settings $HOME/.claude/profiles/perso.json --dangerously-skip-permissions'
