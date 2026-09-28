@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# Make tmux-resurrect restore the exact claude session + account per pane.
+#   hook    - claude SessionStart hook: tag pane with config dir + session id
+#   save    - resurrect post-save hook: snapshot pane -> session map
+#   restore - resurrect restore command, gets the original claude args
+map="${XDG_DATA_HOME:-$HOME/.local/share}/tmux/resurrect/claude_sessions"
+fmt=$'#{session_name}:#{window_index}.#{pane_index}\t#{@claude_resume}'
+
+case "$1" in
+hook)
+  [ -n "$TMUX_PANE" ] || exit 0
+  sid=$(jq -r .session_id)
+  tmux set -p -t "$TMUX_PANE" @claude_resume "${CLAUDE_CONFIG_DIR}|${sid}"
+  ;;
+save)
+  tmux list-panes -a -F "$fmt" | awk -F'\t' '$2 != ""' >"$map.tmp" && mv "$map.tmp" "$map"
+  ;;
+restore)
+  shift
+  # drop old --continue/--resume, we pick the session ourselves
+  args=()
+  while [ $# -gt 0 ]; do
+    case "$1" in
+    -c | --continue | --resume=*) ;;
+    -r | --resume) [[ "$2" != -* ]] && shift ;;
+    *) args+=("$1") ;;
+    esac
+    shift
+  done
+  pane=$(tmux display -p -t "$TMUX_PANE" '#{session_name}:#{window_index}.#{pane_index}')
+  entry=$(awk -F'\t' -v p="$pane" '$1 == p { print $2 }' "$map" 2>/dev/null)
+  if [ -z "$entry" ]; then
+    exec claude --continue ${args[@]+"${args[@]}"}
+  fi
+  cfg=${entry%%|*}
+  if [ -n "$cfg" ]; then export CLAUDE_CONFIG_DIR="$cfg"; else unset CLAUDE_CONFIG_DIR; fi
+  exec claude --resume "${entry#*|}" ${args[@]+"${args[@]}"}
+  ;;
+esac
