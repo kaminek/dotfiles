@@ -92,6 +92,12 @@ export SOPS_AGE_KEY_FILE=$HOME/.config/sops/age/keys.txt
 # k9s
 export K9S_CONFIG_DIR=~/.config/k9s
 export K9S_EDITOR=nvim
+# follow macOS appearance like ghostty (catppuccin frappe/latte)
+k9s() {
+  local skin=catppuccin-latte-transparent
+  [[ $(defaults read -g AppleInterfaceStyle 2>/dev/null) == Dark ]] && skin=catppuccin-frappe-transparent
+  K9S_SKIN=$skin command k9s "$@"
+}
 
 export STARSHIP_CONFIG="$HOME/.config/starship/starship.toml"
 
@@ -358,3 +364,6 @@ eval "$(starship init zsh)"
 # OrbStack CLI integration
 [[ -f "$HOME/.orbstack/shell/init.zsh" ]] && source "$HOME/.orbstack/shell/init.zsh"
 
+
+# strix
+export PATH=/Users/amine.kherbouche/.strix/bin:$PATH
